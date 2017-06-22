@@ -4,19 +4,25 @@
 	<title>Shorty</title>
 	<link rel="stylesheet" type="text/css" href="../static/css/skeleton.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
 </head>
 <body>
+<div class=" u-full-width main_header">
+	<h3 align="left">Shorty</h3>
+</div>
+
 <div class="container">
-		<div class="shorty">
-			<form>
-				<div class="center" class="row">
-					<div class="one row">
-						<input type="text" class="u-full-width" id="url_input" placeholder="Enter URL" ><br>
-						<button class="button-primary">Generate</button>
-					</div>
-				</div>
-			</form>
-		</div>
+<div class="shorty">
+	<form method="post" action="">
+				<input type="text" class="u-full-width" id="url_input" placeholder="Enter URL" >
+				{% if errro != null %}
+				<p class="error_disp">
+					{% error %}
+				</p>
+				{% endif %}
+				<button class="button-primary generate">Generate</button>
+	</form>
+</div>
 </div>
 </body>
 </html>

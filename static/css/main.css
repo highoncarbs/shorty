@@ -1,0 +1,19 @@
+body{
+
+}
+.main_header{
+	padding: 10px;
+	background-color: black;
+	color: white;
+}
+h3{
+	border:0;
+	margin: 0;
+	padding: 0;
+}
+.shorty{
+	padding-top: 100px;
+}
+.shorty button{
+	margin-top: 20px;
+}
