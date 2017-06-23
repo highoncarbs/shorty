@@ -14,14 +14,22 @@
 <div class="container">
 <div class="shorty">
 	<form method="post" action="">
-				<input type="text" class="u-full-width" id="url_input" placeholder="Enter URL" >
-				{% if errro != null %}
+				<input type="text" class="u-full-width" name="url_input" placeholder="Enter URL" >
+				{% if error != null %}
 				<p class="error_disp">
-					{% error %}
+					{{error}}
 				</p>
 				{% endif %}
 				<button class="button-primary generate">Generate</button>
 	</form>
+	{% if shorty_url %}
+	<div class="gen_block">
+	
+	<p class="gen_url">
+		Shorty URL is <a href="{{shorty_url}}">{{shorty_url}}</a>
+	</p>
+	</div>
+	{% endif %}
 </div>
 </div>
 </body>
