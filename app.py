@@ -43,11 +43,9 @@ def index():
 		
 		if custom_suff == '':
 			token_string =  random_token()
-			print token_string + "Cutom ha"
 		else:
 			token_string = custom_suff
-			print token_string
-
+		
 		conn = sqlite3.connect('url.db')
 		cursor = conn.cursor()
 		insert_row = """
@@ -69,8 +67,11 @@ def index():
 def reroute(short_url):
 	conn = sqlite3.connect('url.db')
 	cursor = conn.cursor()
-	
+
+	# To implement counter 
+
 	result_cur = cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = ?;" ,(short_url,) )
+	incr_cur = cursor.execute("UPDATE WEB_URL SET COUNTER = COUNTER + 1 WHERE S_URL = ?;" , (short_url,))
 	try:
 		new_url = result_cur.fetchone()[0]
 		print new_url
@@ -83,3 +84,7 @@ def reroute(short_url):
 if __name__ == '__main__':
 	table_check()
 	app.run(port=5454 ,debug=True)
+
+# To implement Analytics
+# Delete Trigger
+# QR Code 

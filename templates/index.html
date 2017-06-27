@@ -2,7 +2,11 @@
 <html>
 <head>
 	<title>Shorty</title>
-	<script src="dist/clipboard.min.js"></script>
+	<script src="dist/clipboard.min.js">
+		(function(){
+    new Clipboard('#copy_target');
+})();
+	</script>
 	<link rel="stylesheet" type="text/css" href="../static/css/skeleton.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/normalize.css">
 	<!-- <link rel="stylesheet" type="text/css" href="../static/css/main.css"> -->
@@ -25,19 +29,16 @@
 				</p>
 				{% endif %}
 				<button class="button-primary generate">Generate</button>
-				<button class="button-primary copy">Copy</button>
+				<button class="button-primary copy" data-clipboard-target="#copy_target">Copy</button>
 	</form>
 	{% if shorty_url %}
 	<div class="gen_block">
 	
 	<p class="gen_url">
-		Shorty URL is <a href="{{shorty_url}}">{{shorty_url}}</a>
+		Shorty URL is <a id="copy_target" href="{{shorty_url}}">{{shorty_url}}</a>
 	</p>
 	</div>
 	{% endif %}
 </div>
 </div>
-<script type="text/javascript">
-	new Clipboard('.')
-</script>
 </html>
