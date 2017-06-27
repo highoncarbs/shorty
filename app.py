@@ -39,22 +39,28 @@ def table_check():
 def index():
 	if request.method == 'POST':
 		og_url = request.form.get('url_input')
+		custom_suff = request.form.get('url_custom')
+		
+		if custom_suff == None:
+			token_string =  random_token() 
+		else:
+			token_string = custom_suff
 		conn = sqlite3.connect('url.db')
 		cursor = conn.cursor()
-		token_string = random_token()
-		
 		insert_row = """
 			INSERT INTO WEB_URL(URL , S_URL) VALUES('%s' , '%s')
 			"""%(og_url , token_string)
-		print(insert_row)
+		
 		result_cur = cursor.execute(insert_row)
 		conn.commit()
 		conn.close()
+		
 		return render_template('index.html' ,shorty_url = shorty_host+token_string)
+	
 	else:	
 		return render_template('index.html')
 
-# Rerouting funciton
+# Rerouting funciton	
 
 @app.route('/<short_url>')
 def redirect(short_url):
@@ -63,11 +69,10 @@ def redirect(short_url):
 	
 	result_cur = cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = ?;" ,(short_url,) )
 	try:
-		redirect_url = result_cur.fetchone()[0]
-		print redirect_url
-			
-		conn.close()
-		return redirect(redirect_url)	
+		new_url = result_cur.fetchone()[0]
+		print new_url
+		return redirect(str(new_url))
+		conn.close()	
 	except Exception as e:
 		error  = e 
 		return render_template('index.html' , error = error)

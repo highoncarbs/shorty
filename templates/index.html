@@ -2,25 +2,30 @@
 <html>
 <head>
 	<title>Shorty</title>
+	<script src="dist/clipboard.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../static/css/skeleton.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+	<!-- <link rel="stylesheet" type="text/css" href="../static/css/main.css"> -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet"> 
 </head>
 <body>
-<div class=" u-full-width main_header">
-	<h3 align="left">Shorty</h3>
+<div class="container u-full-width main_header">
+	<h3 align="left" href="index.html">Shorty</h3>
 </div>
 
-<div class="container">
-<div class="shorty">
+<div class="u-full-width shorty">
+	<div class="container">
+
 	<form method="post" action="">
-				<input type="text" class="u-full-width" name="url_input" placeholder="Enter URL" >
+				<input type="text" style="width: 50%;" name="url_input" placeholder="Enter URL" >
+				<input type="text" style="width: 100px;" name="url_custom" placeholder="Enter Custom Suffix" >
 				{% if error != null %}
 				<p class="error_disp">
 					{{error}}
 				</p>
 				{% endif %}
 				<button class="button-primary generate">Generate</button>
+				<button class="button-primary copy">Copy</button>
 	</form>
 	{% if shorty_url %}
 	<div class="gen_block">
@@ -32,5 +37,7 @@
 	{% endif %}
 </div>
 </div>
-</body>
+<script type="text/javascript">
+	new Clipboard('.')
+</script>
 </html>
