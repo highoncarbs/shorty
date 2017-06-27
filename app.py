@@ -41,10 +41,13 @@ def index():
 		og_url = request.form.get('url_input')
 		custom_suff = request.form.get('url_custom')
 		
-		if custom_suff == None:
-			token_string =  random_token() 
+		if custom_suff == '':
+			token_string =  random_token()
+			print token_string + "Cutom ha"
 		else:
 			token_string = custom_suff
+			print token_string
+
 		conn = sqlite3.connect('url.db')
 		cursor = conn.cursor()
 		insert_row = """
@@ -63,7 +66,7 @@ def index():
 # Rerouting funciton	
 
 @app.route('/<short_url>')
-def redirect(short_url):
+def reroute(short_url):
 	conn = sqlite3.connect('url.db')
 	cursor = conn.cursor()
 	
