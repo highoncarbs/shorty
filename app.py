@@ -13,7 +13,7 @@ os.putenv('LC_ALL', 'en_US.UTF-8')
 
 app = Flask(__name__)
 
-shorty_host = "https://localhost:5454/"
+shorty_host = "http://localhost:5454/"
 
 # url.db -> root folder * Db check fuction*
 def table_check():
@@ -60,13 +60,12 @@ def index():
 def redirect(short_url):
 	conn = sqlite3.connect('url.db')
 	cursor = conn.cursor()
-	select_row = '''
-		SELECT URL FROM WEB_URL WHERE S_URL = %s
-		'''%(short_url)
-	result_cur = cursor.execute(select_row)
+	
+	result_cur = cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = ?;" ,(short_url,) )
 	try:
-		redirect_url = result_cur.fetchnone()[0]
-		conn.commit()
+		redirect_url = result_cur.fetchone()[0]
+		print redirect_url
+			
 		conn.close()
 		return redirect(redirect_url)	
 	except Exception as e:
