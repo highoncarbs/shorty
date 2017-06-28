@@ -1,0 +1,27 @@
+{% block content %}
+<div class="table_list">
+<table>
+	<thead>
+		<tr>
+			<th>Original URL</th>
+
+			<th>Date</th>
+
+			<th>Shorty URL</th>
+
+			<th>All Clicks</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td>{{long_url}}</td>
+			<td>{{date_stamp}}</td>
+			<td>{{short_url}}</td>
+			<td>{{t_clicks}}</td>
+		</tr>		
+	</tbody>
+
+</table>
+</div>	
+{% endblock %} 
