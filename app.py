@@ -45,7 +45,6 @@ def index():
 			token_string =  random_token()
 		else:
 			token_string = custom_suff
-		
 		conn = sqlite3.connect('url.db')
 		cursor = conn.cursor()
 		insert_row = """
@@ -67,16 +66,46 @@ def index():
 def reroute(short_url):
 	conn = sqlite3.connect('url.db')
 	cursor = conn.cursor()
+	platform = request.user_agent.platform
+	browser =  request.user_agent.browser
+	counter = 1
 
-	# To implement counter 
+	# Platform , Browser vars
+	browser_dict = {'firefox': 0 , 'chrome':0 , 'safari':0 , 'other':0}
+	platform_dict = {'windows':0 , 'ios':0 , 'android':0 , 'linux':0 , 'macos':0 , 'other':0}
 
+	# Analytics
+	for key, value in browser_dict.iteritems():
+		if browser is key:
+			value += 1
+		else:
+			browser_dict['others'] += 1
+	
+	for key, value in platform_dict.iteritems():
+		if platform is key:
+			value += 1
+		else:
+			platform_dict['others'] += 1
+			
 	result_cur = cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = ?;" ,(short_url,) )
-	incr_cur = cursor.execute("UPDATE WEB_URL SET COUNTER = COUNTER + 1 WHERE S_URL = ?;" , (short_url,))
+	print result_cur
+
+
 	try:
 		new_url = result_cur.fetchone()[0]
 		print new_url
+		# Update Counters
+		counter_sql = "\
+				UPDATE {tn} SET COUNTER +={og_counter} , CHROME += {og_chrome} , FIREFOX += {og_firefox} ,\
+				SAFARI += {og_safari} , OTHER_BROWSER += {og_oth_brow} , ANDROID += {og_andr} , IOS += {og_ios},\
+				WINDOWS += {og_windows} , LINUX += {og_linux}  , MAC += {og_mac} , OTHER_PLATFORM += {og_plat_other}".\
+				format(tn = "WEB_URL" , og_counter = counter , og_chrome = browser_dict['chrome'] , og_firefox = browser_dict['firefox'],\
+				og_safari = browser_dict['safari'] , og_oth_brow = browser_dict['other'] , og_andr = platform_dict['android'] , og_ios = platform_dict['ios'] ,\
+				og_windows = platform_dict['windows'] , og_linux = platform_dict['linux'] , og_mac = platform_dict['macos'] , og_plat_other = platform_dict['otehr'])
+		cursor.execute(counter_sql)
 		return redirect(str(new_url))
-		conn.close()	
+		conn.close()
+			
 	except Exception as e:
 		error  = e 
 		return render_template('index.html' , error = error)
