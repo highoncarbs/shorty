@@ -28,12 +28,7 @@ pip install sqlite3
 
 ## Authors
 
-* **Padam Sethia** - *Initial work* - [PadamSethia](https://github.com/PadamSethia)
-
+* **[Padam Sethia](https://github.com/PadamSethia)**
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Thanks to goo.g - [goo.gl][https://goo.gl]
