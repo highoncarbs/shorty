@@ -20,9 +20,9 @@ This project requires Flask and SQLite . You can install it using the following 
 >You might need to sudo install it.
 
 ```
-sudo pip install flask
+pip install flask
 
-sudo pip install sqlite3
+pip install sqlite3
 ```
 
 
