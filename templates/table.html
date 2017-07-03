@@ -5,7 +5,7 @@
 		<tr>
 			<th>Original URL</th>
 
-			<th>Date</th>
+			<!-- <th>Date</th> -->
 
 			<th>Shorty URL</th>
 
@@ -14,12 +14,14 @@
 	</thead>
 
 	<tbody>
+	{% for url in table %}
 		<tr>
 			<td>{{long_url}}</td>
-			<td>{{date_stamp}}</td>
+			<!-- <td>{{date_stamp}}</td> -->
 			<td>{{short_url}}</td>
 			<td>{{t_clicks}}</td>
-		</tr>		
+		</tr>
+	{% endfor %}		
 	</tbody>
 
 </table>

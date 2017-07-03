@@ -4,7 +4,7 @@ from check_encode import random_token
 from check_encode import url_check
 import sqlite3
 import sys
-from display_list import list_data
+# from display_list import list_data
 reload(sys)
 sys.setdefaultencoding('UTF-8')
 
@@ -23,7 +23,18 @@ def table_check():
 		ID INTEGER PRIMARY KEY AUTOINCREMENT,
 		URL TEXT ,
 		S_URL TEXT ,
-		COUNTER INT DEFAULT 0
+		COUNTER INTEGER DEFAULT 0,
+		CHROME INTEGER DEFAULT 0, 
+		FIREFOX INTEGER DEFAULT 0, 
+		SAFARI INTEGER DEFAULT 0, 
+		OTHER_BROWSER INTEGER DEFAULT 0, 
+		ANDROID INTEGER DEFAULT 0, 
+		IOS INTEGER DEFAULT 0, 
+		WINDOWS INTEGER DEFAULT 0, 
+		LINUX INTEGER DEFAULT 0, 
+		MAC INTEGER DEFAULT 0, 
+		OTHER_PLATFORM INTEGER DEFAULT 0
+
 		);
 		'''
 	conn =  sqlite3.connect('url.db')
@@ -35,6 +46,7 @@ def table_check():
 	except OperationalError:
 		error = str(OperationalError)
 	pass
+
 @app.route('/test')
 def testing():
 	display_sql = list_data("87lF96")
@@ -70,6 +82,7 @@ def index():
 
 @app.route('/<short_url>')
 def reroute(short_url):
+
 	conn = sqlite3.connect('url.db')
 	cursor = conn.cursor()
 	platform = request.user_agent.platform
@@ -77,21 +90,20 @@ def reroute(short_url):
 	counter = 1
 
 	# Platform , Browser vars
+	
 	browser_dict = {'firefox': 0 , 'chrome':0 , 'safari':0 , 'other':0}
 	platform_dict = {'windows':0 , 'iphone':0 , 'android':0 , 'linux':0 , 'macos':0 , 'other':0}
 
 	# Analytics
-	for key, value in browser_dict.iteritems():
-		if browser is key:
-			value += 1
-		else:
-			browser_dict['other'] += 1
+	if browser is key in browser_dict.iterkeys():
+		browser_dict[browser] += 1
+	else:
+		browser_dict['other'] += 1
 	
-	for key, value in platform_dict.iteritems():
-		if platform is key:
-			value += 1
-		else:
-			platform_dict['other'] += 1
+	if platform is key in platform_dict.iterkeys():
+		browser_dict[platform] += 1
+	else:
+		platform_dict['other'] += 1
 			
 	result_cur = cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = ?;" ,(short_url,) )
 
@@ -118,6 +130,7 @@ def reroute(short_url):
 	# except Exception as e:
 	# 	error  = e 
 	except Exception as e:
+		print e
 		return render_template('index.html' , error = e)
 
 if __name__ == '__main__':
