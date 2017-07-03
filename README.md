@@ -2,6 +2,7 @@
 
 > A URL shortening service built using Flask & SQLite. 
 
+![Demo image of Shorty](./desc/hero_final.png)
 ## Getting Started
 
 Clone or download this repository on your local machine 
