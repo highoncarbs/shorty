@@ -63,6 +63,7 @@ def index():
 			token_string =  random_token()
 		else:
 			token_string = custom_suff
+
 		conn = sqlite3.connect('url.db')
 		cursor = conn.cursor()
 		insert_row = """
@@ -95,40 +96,38 @@ def reroute(short_url):
 	platform_dict = {'windows':0 , 'iphone':0 , 'android':0 , 'linux':0 , 'macos':0 , 'other':0}
 
 	# Analytics
-	if browser is key in browser_dict.iterkeys():
+	if browser in browser_dict:
 		browser_dict[browser] += 1
-	else:
+	else:	
 		browser_dict['other'] += 1
 	
-	if platform is key in platform_dict.iterkeys():
-		browser_dict[platform] += 1
+	if platform in platform_dict.iterkeys():
+		platform_dict[platform] += 1
 	else:
 		platform_dict['other'] += 1
 			
 	result_cur = cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = ?;" ,(short_url,) )
-
+	print result_cur
 
 	try:
 		new_url = result_cur.fetchone()[0]
-
+		print new_url
 		# Update Counters
 		counter_sql = "\
-				UPDATE {tn} SET COUNTER += {og_counter} , CHROME += {og_chrome} , FIREFOX += {og_firefox} ,\
-				SAFARI += {og_safari} , OTHER_BROWSER += {og_oth_brow} , ANDROID += {og_andr} , IOS += {og_ios},\
-				WINDOWS += {og_windows} , LINUX += {og_linux}  , MAC += {og_mac} , OTHER_PLATFORM += {og_plat_other}".\
+				UPDATE {tn} SET COUNTER = COUNTER + {og_counter} , CHROME = CHROME + {og_chrome} , FIREFOX = FIREFOX+{og_firefox} ,\
+				SAFARI = SAFARI+{og_safari} , OTHER_BROWSER =OTHER_BROWSER+ {og_oth_brow} , ANDROID = ANDROID +{og_andr} , IOS = IOS +{og_ios},\
+				WINDOWS = WINDOWS+{og_windows} , LINUX = LINUX+{og_linux}  , MAC =MAC+ {og_mac} , OTHER_PLATFORM =OTHER_PLATFORM+ {og_plat_other} WHERE S_URL = '{surl}';".\
 				format(tn = "WEB_URL" , og_counter = counter , og_chrome = browser_dict['chrome'] , og_firefox = browser_dict['firefox'],\
-				og_safari = browser_dict['safari'] , og_oth_brow = browser_dict['other'] , og_andr = platform_dict['android'] , og_ios = platform_dict['ios'] ,\
-				og_windows = platform_dict['windows'] , og_linux = platform_dict['linux'] , og_mac = platform_dict['macos'] , og_plat_other = platform_dict['other'])
+				og_safari = browser_dict['safari'] , og_oth_brow = browser_dict['other'] , og_andr = platform_dict['android'] , og_ios = platform_dict['iphone'] ,\
+				og_windows = platform_dict['windows'] , og_linux = platform_dict['linux'] , og_mac = platform_dict['macos'] , og_plat_other = platform_dict['other'] ,\
+				surl = short_url)
 		print counter_sql
-		print "boboboobob"
 		res_update = cursor.execute(counter_sql)
 		conn.commit()
 		conn.close()
 
 		return redirect(new_url)
 
-	# except Exception as e:
-	# 	error  = e 
 	except Exception as e:
 		print e
 		return render_template('index.html' , error = e)
