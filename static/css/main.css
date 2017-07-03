@@ -1,15 +1,17 @@
-body{
+html{
 
-    font-family: 'Roboto', sans-serif;
-
+    border-top : 5px solid #d9edf7;
 }
+body{
+    font-family: 'Roboto', sans-serif;
+    margin: 50px;
+}
+
+h3{
+	font-weight: 700;
+}/*
 .main_header{
 	padding: 10px;
-}
-h3{
-	border:0;
-	margin: 0;
-	padding: 0;
 }
 .shorty{
 	margin-top: 20px;
@@ -21,4 +23,21 @@ h3{
 	margin-top: 20px;
 	background-color: #0073cf;
 	border: 0;
+}*/
+/* Gen URL block */
+
+.gen_block{
+	padding: 15px;
+	background-color:#d9edf7;
+	color : #31708f;
+	border-radius: 5px;
+	width: auto;
+	font-size: 20px;
+
+}
+/* Error Disp */
+.error_disp{
+	padding: 5px;
+	background-color:#fcf8e3;
+	color : #b84442;
 }

@@ -5,38 +5,42 @@
 	<script src="dist/clipboard.min.js">
 		(function(){
     new Clipboard('#copy_target');
-})();
+	})();
 	</script>
 	<link rel="stylesheet" type="text/css" href="../static/css/skeleton.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/normalize.css">
-	<!-- <link rel="stylesheet" type="text/css" href="../static/css/main.css"> -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet"> 
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet"> 
 </head>
 <body>
-<div class="container u-full-width main_header">
+<div class="container  main_header">
 	<h3 align="left" href="index.html">Shorty</h3>
+	<p>A dead simple URL shortener service.</p>
 </div>
 
 <div class="u-full-width shorty">
 	<div class="container">
 
 	<form method="post" action="">
-				<input type="text" style="width: 50%;" name="url_input" placeholder="Enter URL" >
-				<input type="text" style="width: 100px;" name="url_custom" placeholder="Enter Custom Suffix" >
-				{% if error != null %}
+				<div class="row">
+				<input type="text"  name="url_input" placeholder="Enter URL" >
+				<input type="text"  name="url_custom" placeholder="Enter Custom Suffix" >
+				<button class="button-primary generate">Generate</button>
+				</div>
+	</form>
+	{% if error != null %}
 				<p class="error_disp">
+					error
 					{{error}}
 				</p>
 				{% endif %}
-				<button class="button-primary generate">Generate</button>
-				<button class="button-primary copy" data-clipboard-target="#copy_target">Copy</button>
-	</form>
 	{% if shorty_url %}
 	<div class="gen_block">
 	
 	<p class="gen_url">
-		Shorty URL is <a id="copy_target" href="{{shorty_url}}">{{shorty_url}}</a>
+		Shorty URL is <b><a id="copy_target" href="{{shorty_url}}">{{shorty_url}}</a></b>
 	</p>
+	<button class="button-primary copy" data-clipboard-target="#copy_target">Copy</button>		
 	</div>
 	{% endif %}
 </div>
