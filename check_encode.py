@@ -1,4 +1,4 @@
-'''
+'''	
 Convert Url to string to Base62 string
 
 Base62 used instead of base 64 , to preserve URL format 
@@ -40,8 +40,9 @@ def random_token(size = 6):
 def url_check(url):
 	parse = urlparse(url)
 	if not parse.scheme in ('https' , 'http'):
+		url = ''.join('https://' , url)
+		return url
 		error = "Not a valid URL"
-
 	else:
 		# If URL is valid , encode to base64
-		return True
+		return url

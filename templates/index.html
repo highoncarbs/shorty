@@ -20,14 +20,33 @@
 
 <div class="u-full-width shorty">
 	<div class="container">
+	
+	<!-- Search URL block -->
 
-	<form method="post" action="">
+	<div class="search_url_block">
+
+		<form method="post" action="/search" name="search_tag_block">
+			<input type="text" name="search_url" placeholder="Search tags ">
+			<button type="submit" class="button-primary search_url_btn" value="Search">Search</button>
+		
+		</form>
+	</div>
+	
+	<!-- end block -->
+
+	<!-- URL Input block -->
+	<form method="post" action="" name="generate_block">
 				<div class="row">
 				<input type="text"  name="url_input" placeholder="Enter URL" >
 				<input type="text"  name="url_custom" placeholder="Enter Custom Suffix" >
+				<input type="text" name="url_tag" placeholder="Tag URL" >
 				<button class="button-primary generate">Generate</button>
 				</div>
 	</form>
+	<!-- end block -->
+
+	<!-- Error Display block -->
+
 	{% if error != null %}
 				<p class="error_disp">
 					error
@@ -35,6 +54,12 @@
 				</p>
 				{% endif %}
 	{% if shorty_url %}
+
+	<!-- end block-->
+
+
+	<!-- URL Generator Display block -->
+
 	<div class="gen_block">
 	
 	<p class="gen_url">
@@ -43,6 +68,35 @@
 	<button class="button-primary copy" data-clipboard-target="#copy_target">Copy</button>		
 	</div>
 	{% endif %}
+
+
+	<!-- end block -->
+
+	<!-- URL List Block -->
+	
+	<div class="table_list u-full-width">
+	<table>
+		<thead>
+			<tr>
+				<th>Original URL</th>
+				<th>Short URL</th>
+				<th>Clicks</th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{% for url in table %}
+			<tr>
+				<td>{{url[1]}}</td>
+				<td><a href="{{ 'http://localhost:5454/'+url[2]}}">{{ 'http://localhost:5454/'+url[2]}}</a></td>
+				<td style="text-align: center;">{{url[3]}}</td>
+				<td style="text-align: center;"> + </td>
+			</tr>
+		{% endfor %}		
+		</tbody>
+	</table>
+	</div>
+
 </div>
 </div>
 </html>

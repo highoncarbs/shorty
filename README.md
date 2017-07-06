@@ -24,6 +24,8 @@ This project requires Flask and SQLite . You can install it using the following 
 pip install flask
 
 pip install sqlite3
+
+pip install auth
 ```
 
 

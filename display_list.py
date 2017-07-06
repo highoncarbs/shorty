@@ -1,19 +1,23 @@
 import sqlite3
 from config import *
-from flask import render_template
+ 
+# !!IMP!!
+# Confirm for SQL Injection adn security ! 
+# USe of ' ? ' replaced with format()
+def list_data(shorty_url):
 
-# def list_data(shorty_url):
+	conn = sqlite3.connect('url.db')
+	cursor = conn.cursor()
+	su = shorty_url
+	counter_sql = "SELECT URL FROM WEB_URL WHERE S_URL= ?; "
+	browser_sql = "SELECT CHROME , FIREFOX , SAFARI, OTHER_BROWSER FROM WEB_URL WHERE S_URL =?;"
+	platform_sql = "SELECT ANDROID , IOS , WINDOWS, LINUX , MAC , OTHER_PLATFORM FROM WEB_URL WHERE S_URL = ?;"	
+	counter_fetch = cursor.execute(counter_sql , (su,)).fetchone()
+	browser_fetch = cursor.execute(browser_sql, (su,)).fetchone()
+	platform_fetch = cursor.execute(platform_sql, (su,)).fetchone()
+	conn.close()
+	return counter_fetch , browser_fetch , platform_fetch
 
-# 	conn = sqlite3.connect('url.db')
-	# cursor = conn.cursor()
-# 	counter_sql = cursor.execute("SELECT COUNTER FROM WEB_URL WHERE S_URL = ?;" ,(shorty_url,) )
-# 	browser_sql = cursor.execute("SELECT CHROME , FIREFOX , SAFARI, OTHER_BROWSER FROM WEB_URL WHERE S_URL = ?;" ,(shorty_url,) )
-# 	platform_sql = cursor.execute("SELECT ANDROID , IOS , WINDOWS, LINUX , MAC , OTHER_PLATFORM FROM WEB_URL WHERE S_URL = ?;" ,(shorty_url,) ) 
-# 	counter_fetch = counter_sql.fetchall()
-# 	browser_fetch = browser_sql.fetchone()
-# 	platform_fetch = platform_sql.fetchone()
-# 	conn.close()
-	
-# 	return counter_fetch , browser_fetch , platform_fetch
-
-# c ,b ,p = list_data("87lF96")
+# Test playground
+# c , b , p = list_data("tiktok")
+# print c

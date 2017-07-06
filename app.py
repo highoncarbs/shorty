@@ -1,42 +1,45 @@
-from flask import Flask , request , redirect , render_template
-from sqlite3 import OperationalError
-from check_encode import random_token
-from check_encode import url_check
+#!/usr/bin/env python2.7
+
 import sqlite3
 import sys
-# from display_list import list_data
+import os
+
+# Flask Import
+from flask import Flask , request , redirect , render_template
+from sqlite3 import OperationalError
+
+# token gen import
+from check_encode import random_token
+from check_encode import url_check
+
+# WTFForm Imports
+
+from sql_table import *
+
+# Setting UTF-8 encoding
+
 reload(sys)
 sys.setdefaultencoding('UTF-8')
-
-import os
 os.putenv('LANG', 'en_US.UTF-8')
 os.putenv('LC_ALL', 'en_US.UTF-8')
 
 app = Flask(__name__)
-
+app.config.from_object('config')
 shorty_host = "http://localhost:5454/"
 
+'''
+# FLask wtf init
+from flask_wtf import Form
+from wtforms import StringField
+from wtforms.validators import DataRequired
+
+class Search_tag(Form):
+	search_input = StringField('search_url' , validators=[DataRequired()])
+
+'''
 # url.db -> root folder * Db check fuction*
 def table_check():
-	create_table = '''
-		CREATE TABLE WEB_URL(
-		ID INTEGER PRIMARY KEY AUTOINCREMENT,
-		URL TEXT ,
-		S_URL TEXT ,
-		COUNTER INTEGER DEFAULT 0,
-		CHROME INTEGER DEFAULT 0, 
-		FIREFOX INTEGER DEFAULT 0, 
-		SAFARI INTEGER DEFAULT 0, 
-		OTHER_BROWSER INTEGER DEFAULT 0, 
-		ANDROID INTEGER DEFAULT 0, 
-		IOS INTEGER DEFAULT 0, 
-		WINDOWS INTEGER DEFAULT 0, 
-		LINUX INTEGER DEFAULT 0, 
-		MAC INTEGER DEFAULT 0, 
-		OTHER_PLATFORM INTEGER DEFAULT 0
-
-		);
-		'''
+	create_table = create_table_per_user
 	conn =  sqlite3.connect('url.db')
 	cursor = conn.cursor()
 	try:
@@ -47,38 +50,67 @@ def table_check():
 		error = str(OperationalError)
 	pass
 
-@app.route('/test')
+@app.route('/analytics/<short_url>')
 def testing():
-	display_sql = list_data("87lF96")
+	display_sql = list_data("short_url")
 	return render_template("table.html" , t_clicks = display_sql)
 
+'''
+# Not in use
+
+@app.route('/login')
+def login_user():
+
+	return render_template('login_page.html')
+
+'''
 
 @app.route('/' , methods=['GET' , 'POST'])
 def index():
+
+	'''
+	search = Search_tag()
+	if search.validate_on_submit():
+		return render_template('/search/<search_input>')
+	else:
+		error = "Oops ! The search seems broken."
+		return render_template('index.html' ,form = search)
+	'''
+
+	conn = sqlite3.connect('url.db')
+	cursor = conn.cursor()
+	
+	list_sql = "SELECT * FROM WEB_URL;"
+	result_cur = cursor.execute(list_sql)
+	result_all_fetch = result_cur.fetchall()
+		
 	if request.method == 'POST':
 		og_url = request.form.get('url_input')
 		custom_suff = request.form.get('url_custom')
+		tag_url = request.form.get('url_tag')
 		
 		if custom_suff == '':
 			token_string =  random_token()
 		else:
 			token_string = custom_suff
 
-		conn = sqlite3.connect('url.db')
-		cursor = conn.cursor()
+		# conn = sqlite3.connect('url.db')
+		# cursor = conn.cursor()
 		insert_row = """
-			INSERT INTO WEB_URL(URL , S_URL) VALUES('%s' , '%s')
-			"""%(og_url , token_string)
-		
-		result_cur = cursor.execute(insert_row)
+			INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( ?, ? , ?)
+			"""
+		result_cur = cursor.execute(insert_row ,(og_url , token_string , tag_url,))
+
+		list_sql = "SELECT * FROM WEB_URL;"
+		result_cur = cursor.execute(list_sql)
+		result_all_fetch = result_cur.fetchall()
 		conn.commit()
 		conn.close()
-		
-		return render_template('index.html' ,shorty_url = shorty_host+token_string)
-	
+			
+		return render_template('index.html' ,shorty_url = shorty_host+token_string )
 	else:	
-		return render_template('index.html')
-
+		return render_template('index.html',table = result_all_fetch )
+	
 # Rerouting funciton	
 
 @app.route('/<short_url>')
@@ -112,7 +144,9 @@ def reroute(short_url):
 	try:
 		new_url = result_cur.fetchone()[0]
 		print new_url
-		# Update Counters
+
+		# Update Counters 
+		
 		counter_sql = "\
 				UPDATE {tn} SET COUNTER = COUNTER + {og_counter} , CHROME = CHROME + {og_chrome} , FIREFOX = FIREFOX+{og_firefox} ,\
 				SAFARI = SAFARI+{og_safari} , OTHER_BROWSER =OTHER_BROWSER+ {og_oth_brow} , ANDROID = ANDROID +{og_andr} , IOS = IOS +{og_ios},\
@@ -132,10 +166,23 @@ def reroute(short_url):
 		print e
 		return render_template('index.html' , error = e)
 
+# Search results
+
+@app.route('/search' ,  methods=['GET' , 'POST'])
+def search():
+	s_tag = request.form.get('search_url')
+	conn = sqlite3.connect('url.db')
+	cursor = conn.cursor()
+
+	search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = 'music'" 
+	result_cur = cursor.execute(search_tag_sql )
+	search_tag_fetch = result_cur.fetchall()
+	conn.close()
+	return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )
+
 if __name__ == '__main__':
 	table_check()
 	app.run(port=5454 ,debug=True)
 
-# To implement Analytics
 # Delete Trigger
 # QR Code 
