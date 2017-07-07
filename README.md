@@ -25,9 +25,17 @@ pip install flask
 
 pip install sqlite3
 
-pip install auth
+pip install request_OAuth2Session
 ```
+For mysql as backend
 
+```
+sudo apt install mysql-server
+
+sudo apt-get install libmysqlclient-dev
+
+pip install flask_mysqldb
+```
 
 ## Authors
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python2.7
-
-import sqlite3
+# import sqlite3
 import sys
 import os
 
 # Flask Import
 from flask import Flask , request , redirect , render_template
-from sqlite3 import OperationalError
-
+# from sqlite3 import OperationalError
+from flask_mysqldb import MySQL
+import MySQLdb
 # token gen import
 from check_encode import random_token
 from check_encode import url_check
@@ -37,8 +37,19 @@ class Search_tag(Form):
 	search_input = StringField('search_url' , validators=[DataRequired()])
 
 '''
+
+# MySQL configurations when using flask_mysqldb
+
+# app.config['MYSQL_DATABASE_USER'] = 'root'
+# app.config['MYSQL_DATABASE_PASSWORD'] = 'pass'
+# app.config['MYSQL_DATABASE_DB'] = 'SHORTY'
+# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+# mysql.init_app(app)
+# mysql = MySQL()
+
+
 # url.db -> root folder * Db check fuction*
-def table_check():
+def sqlite_table_check():
 	create_table = create_table_per_user
 	conn =  sqlite3.connect('url.db')
 	cursor = conn.cursor()
@@ -49,6 +60,18 @@ def table_check():
 	except OperationalError:
 		error = str(OperationalError)
 	pass
+
+def mysql_table_check():
+	localhost = "localhost"
+	user = "root"
+	passwrd = "pass"
+	db = "SHORTY"
+	create_table = mysql_table
+	conn = MySQLdb.connect(localhost , user , passwrd, db)
+	cursor = conn.cursor()
+	cursor.execute(create_table)
+	conn.close()
+
 
 @app.route('/analytics/<short_url>')
 def testing():
@@ -174,8 +197,8 @@ def search():
 	conn = sqlite3.connect('url.db')
 	cursor = conn.cursor()
 
-	search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = 'music'" 
-	result_cur = cursor.execute(search_tag_sql )
+	search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = ?" 
+	result_cur = cursor.execute(search_tag_sql , (s_tag, ) )
 	search_tag_fetch = result_cur.fetchall()
 	conn.close()
 	return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )

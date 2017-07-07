@@ -74,6 +74,7 @@
 
 	<!-- URL List Block -->
 	
+	{% if not shorty_url%}
 	<div class="table_list u-full-width">
 	<table>
 		<thead>
@@ -90,13 +91,13 @@
 				<td>{{url[1]}}</td>
 				<td><a href="{{ 'http://localhost:5454/'+url[2]}}">{{ 'http://localhost:5454/'+url[2]}}</a></td>
 				<td style="text-align: center;">{{url[3]}}</td>
-				<td style="text-align: center;"> + </td>
+				<!-- <td style="text-align: center;"> + </td> -->
 			</tr>
 		{% endfor %}		
 		</tbody>
 	</table>
 	</div>
-
+	{% endif %}
 </div>
 </div>
 </html>

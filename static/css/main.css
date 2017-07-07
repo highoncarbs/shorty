@@ -4,7 +4,8 @@ html{
 }
 body{
     font-family: 'Roboto', sans-serif;
-    margin: 50px;
+    margin-top: 50px;
+    margin-bottom: 0;
 }
 
 h3{
