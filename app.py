@@ -38,7 +38,12 @@ class Search_tag(Form):
 
 '''
 
-# MySQL configurations when using flask_mysqldb
+# MySQL configurations
+
+localhost = "localhost"
+user = "root"
+passwrd = "pass"
+db = "SHORTY"
 
 # app.config['MYSQL_DATABASE_USER'] = 'root'
 # app.config['MYSQL_DATABASE_PASSWORD'] = 'pass'
@@ -62,10 +67,7 @@ def sqlite_table_check():
 	pass
 
 def mysql_table_check():
-	localhost = "localhost"
-	user = "root"
-	passwrd = "pass"
-	db = "SHORTY"
+	
 	create_table = mysql_table
 	conn = MySQLdb.connect(localhost , user , passwrd, db)
 	cursor = conn.cursor()
@@ -100,12 +102,13 @@ def index():
 		return render_template('index.html' ,form = search)
 	'''
 
-	conn = sqlite3.connect('url.db')
+	conn = MySQLdb.connect(localhost , user , passwrd, db)
 	cursor = conn.cursor()
 	
 	list_sql = "SELECT * FROM WEB_URL;"
-	result_cur = cursor.execute(list_sql)
-	result_all_fetch = result_cur.fetchall()
+	cursor.execute(list_sql)
+	result_all_fetch = cursor.fetchall()
+	print result_all_fetch
 		
 	if request.method == 'POST':
 		og_url = request.form.get('url_input')
@@ -120,13 +123,14 @@ def index():
 		# conn = sqlite3.connect('url.db')
 		# cursor = conn.cursor()
 		insert_row = """
-			INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( ?, ? , ?)
+			INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( %s, %s , %s)
 			"""
 		result_cur = cursor.execute(insert_row ,(og_url , token_string , tag_url,))
 
 		list_sql = "SELECT * FROM WEB_URL;"
-		result_cur = cursor.execute(list_sql)
-		result_all_fetch = result_cur.fetchall()
+		cursor.execute(list_sql)
+		result_all_fetch = cursor.fetchall()
+		print result_all_fetch
 		conn.commit()
 		conn.close()
 			
@@ -139,7 +143,7 @@ def index():
 @app.route('/<short_url>')
 def reroute(short_url):
 
-	conn = sqlite3.connect('url.db')
+	conn = MySQLdb.connect(localhost , user , passwrd, db)
 	cursor = conn.cursor()
 	platform = request.user_agent.platform
 	browser =  request.user_agent.browser
@@ -161,11 +165,10 @@ def reroute(short_url):
 	else:
 		platform_dict['other'] += 1
 			
-	result_cur = cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = ?;" ,(short_url,) )
-	print result_cur
+	cursor.execute("SELECT URL FROM WEB_URL WHERE S_URL = %s;" ,(short_url,) )
 
 	try:
-		new_url = result_cur.fetchone()[0]
+		new_url = cursor.fetchone()[0]
 		print new_url
 
 		# Update Counters 
@@ -194,17 +197,17 @@ def reroute(short_url):
 @app.route('/search' ,  methods=['GET' , 'POST'])
 def search():
 	s_tag = request.form.get('search_url')
-	conn = sqlite3.connect('url.db')
+	conn = MySQLdb.connect(localhost , user , passwrd, db)
 	cursor = conn.cursor()
-
-	search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = ?" 
-	result_cur = cursor.execute(search_tag_sql , (s_tag, ) )
-	search_tag_fetch = result_cur.fetchall()
+	
+	search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = %s" 
+	cursor.execute(search_tag_sql , (s_tag, ) )
+	search_tag_fetch = cursor.fetchall()
 	conn.close()
 	return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )
 
 if __name__ == '__main__':
-	table_check()
+	# mysql_table_check()
 	app.run(port=5454 ,debug=True)
 
 # Delete Trigger

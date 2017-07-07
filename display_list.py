@@ -5,8 +5,8 @@ from config import *
 # Confirm for SQL Injection adn security ! 
 # USe of ' ? ' replaced with format()
 def list_data(shorty_url):
-
-	conn = sqlite3.connect('url.db')
+	
+	conn = MySQLdb.connect(localhost , user , passwrd, db)
 	cursor = conn.cursor()
 	su = shorty_url
 	counter_sql = "SELECT URL FROM WEB_URL WHERE S_URL= ?; "
