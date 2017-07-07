@@ -6,7 +6,6 @@ import os
 # Flask Import
 from flask import Flask , request , redirect , render_template
 # from sqlite3 import OperationalError
-from flask_mysqldb import MySQL
 import MySQLdb
 # token gen import
 from check_encode import random_token

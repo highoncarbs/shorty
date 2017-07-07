@@ -25,7 +25,6 @@ pip install flask
 
 pip install sqlite3
 
-pip install request_OAuth2Session
 ```
 For mysql as backend
 
