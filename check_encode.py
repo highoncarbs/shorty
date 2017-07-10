@@ -1,6 +1,6 @@
 from urlparse import urlparse
 import random
-
+import string
 
 def random_token(size = 6):
 	"""
@@ -21,7 +21,7 @@ def url_check(url):
 	For detailed docs look into urlparse.
 	"""
 	try:
-		result = urlparse(x)
+		result = urlparse(url)
 		return True if [result.scheme, result.netloc, result.path] else False
 	except:
 		return False

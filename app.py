@@ -1,6 +1,6 @@
 #!/usr/bin/env python2.7
 
-# * Duplicate s_url entry to be fixed.
+# * Duplicate s_url entry to be
 
 import sys
 import os
@@ -68,6 +68,8 @@ def index():
 		tag_url = request.form.get('url_tag')
 		
 		if og_url != '':
+			print url_check(og_url)
+
 			if url_check(og_url) == True:
 				if custom_suff == '':
 					token_string =  random_token()
@@ -86,7 +88,7 @@ def index():
 				conn.commit()
 				conn.close()
 				e = ''
-				return render_template('index' ,shorty_url = shorty_host+token_string , error = e )
+				return render_template('index.html' ,shorty_url = shorty_host+token_string , error = e )
 			else:
 				e = "URL entered doesn't seem valid  , Enter a valid URL."
 				return render_template('index.html' ,table = result_all_fetch, error = e)
