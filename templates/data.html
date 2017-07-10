@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shorty</title>
+	
+	<!-- Add Local SVG image when hosting. -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="../static/css/skeleton.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet"> 
+	</head>
+<body>
+<div class="container  main_header">
+	<h3 align="left"><a href="{{url_for('index')}}">Shorty</a></h3>
+	<p>A dead simple URL shortener service.</p>
+</div>
+	<div class=" container modal-content">
+	<!-- Array index -> 
+		CHROME ,
+		FIREFOX,
+		SAFARI,
+		OTHER_BROWSER,
+		ANDROID,
+		IOS,
+		WINDOWS,
+		LINUX ,
+		MAC,
+		OTHER_PLATFORM
+	 -->
+	<div class="url_info">
+	<h4> Analytics data for : <a href="http://localhost:5454/{{url[2]}}">{{url[2]}}</a></h4>
+		<p>Original URL : <a href="{{url[1]}}">{{url[1]}}</a></p>
+	</div>	
+	 <div class="browser_list">
+		<h4>Browsers</h4>
+		<table>
+			<thead>
+				<tr>
+					<th>Chrome</th>
+					<th>Firefox</th>
+					<th>Safari</th>
+					<th>Other Broswers</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>{{url[5]}}</td>
+					<td>{{url[6]}}</td>
+					<td>{{url[7]}}</td>
+					<td>{{url[8]}}</td>
+				</tr>	
+			</tbody>
+		</table> 	
+	 </div>
+	 <div class="platform_list">
+	 		<table>
+			<thead>
+				<tr>
+					<th>Android</th>
+					<th>IOS</th>
+					<th>Windows</th>
+					<th>Linux</th>
+					<th>Mac</th>
+					<th>Other Platforms</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{url[9]}}</td>
+					<td>{{url[10]}}</td>
+					<td>{{url[11]}}</td>
+					<td>{{url[12]}}</td>
+					<td>{{url[13]}}</td>
+					<td>{{url[14]}}</td>
+				</tr>	
+			</tbody>
+		</table> 	
+	 				
+ 	</div>	 
+	</div>
+</body>
+</html>

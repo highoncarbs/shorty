@@ -33,7 +33,7 @@ sudo apt install mysql-server
 
 sudo apt-get install libmysqlclient-dev
 
-pip install flask_mysqldb
+pip install MySQLdb
 ```
 
 ## Authors
