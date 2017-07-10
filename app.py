@@ -156,14 +156,18 @@ def reroute(short_url):
 @app.route('/search' ,  methods=['GET' , 'POST'])
 def search():
 	s_tag = request.form.get('search_url')
-	conn = MySQLdb.connect(localhost , user , passwrd, db)
-	cursor = conn.cursor()
-	
-	search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = %s" 
-	cursor.execute(search_tag_sql , (s_tag, ) )
-	search_tag_fetch = cursor.fetchall()
-	conn.close()
-	return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )
+
+	if s_tag #to fix when search term is none :
+		conn = MySQLdb.connect(localhost , user , passwrd, db)
+		cursor = conn.cursor()
+		
+		search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = %s" 
+		cursor.execute(search_tag_sql , (s_tag, ) )
+		search_tag_fetch = cursor.fetchall()
+		conn.close()
+		return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )
+	else:
+		return render_template('search.html' , error = "Please enter a search term" )
 
 if __name__ == '__main__':
 	app.run(port=5454 ,debug=True)
