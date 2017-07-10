@@ -1,11 +1,11 @@
 # Shorty
 
-> A URL shortening service built using Flask & SQLite. 
+> A URL shortening service built using Flask & Mysql. 
 
 ![Demo image of Shorty](./desc/hero_final.png)
 ## Getting Started
 
-Clone or download this repository on your local machine 
+Clone or download this repository.
 
 ```
 git clone https://github.com/PadamSethia/shorty.git
@@ -17,13 +17,12 @@ python ./app.py
 
 ### Prerequisites
 
-This project requires Flask and SQLite . You can install it using the following commands . 
->You might need to sudo install it.
+This project requires Flask and MySQL . 
+And MySQLdb python module for connection.
+You can install it using the following commands . 
 
 ```
 pip install flask
-
-pip install sqlite3
 
 ```
 For mysql as backend
@@ -32,13 +31,18 @@ For mysql as backend
 sudo apt install mysql-server
 
 sudo apt-get install libmysqlclient-dev
-
-pip install MySQLdb
 ```
+Now run the following command to create the MySQL table 
 
-## Authors
+```
+python ./create_table.py
+```
+Configure the MySQL database credentials in ```config.py```
+Set the host , user , password and database name for MySQL connection.
 
-* **[Padam Sethia](https://github.com/PadamSethia)**
+
+##Projects Used
+* **![Skeleton CSS Framework](https://getskeleton.com)
+* **![Clipboard.js](https://clipboardjs.com)
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT Licene.
