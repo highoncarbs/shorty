@@ -23,7 +23,7 @@ os.putenv('LC_ALL', 'en_US.UTF-8')
 
 app = Flask(__name__)
 app.config.from_object('config')
-shorty_host = "http://localhost:5454/"
+shorty_host = "http://localhost:5000/"
 
 # MySQL configurations
 
@@ -131,7 +131,7 @@ def reroute(short_url):
 
 	try:
 		new_url = cursor.fetchone()[0]
-	
+		print new_url
 		# Update Counters 
 		
 		counter_sql = "\
