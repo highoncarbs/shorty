@@ -2,22 +2,14 @@
 <html>
 <head>
 	<title>Shorty</title>
-	<script src="dist/clipboard.min.js">
-		(function(){
-    new Clipboard('#copy_target');
-	})();
-	</script>
 	<!-- Add Local SVG image when hosting. -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../static/css/skeleton.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="../static/css/main.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,900" rel="stylesheet"> 
-	<!-- Modal Import -->
-	<link rel="stylesheet" type="text/css" href="../static/css/tingle.css">
-	<script type="text/javascript" src="../static/js/tingle.min.js"></script>
 </head>
 <body>
 <div class="container  main_header">
@@ -70,9 +62,9 @@
 	<div class="gen_block">
 	
 	<p class="gen_url">
-		Shorty URL is <b><a id="copy_target" href="{{shorty_url}}">{{shorty_url}}</a></b>
+		Shorty URL is <b><a id="short-url" href="{{shorty_url}}">{{shorty_url}}</a></b>
 	</p>
-	<button class="button-primary copy" data-clipboard-target="#copy_target">Copy</button>		
+	<button class="button-primary copy-btn" data-clipboard-action="copy" data-clipboard-target="#short-url">Copy</button>		
 	</div>
 	{% endif %}
 
@@ -110,4 +102,7 @@
 	{% endif %}
 </div>
 </div>
+<script type="text/javascript">
+	var clipboard = new Clipboard('.copy-btn');
+</script>
 </html>

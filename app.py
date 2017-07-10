@@ -81,8 +81,6 @@ def index():
 		else:
 			token_string = custom_suff
 
-		# conn = sqlite3.connect('url.db')
-		# cursor = conn.cursor()
 		insert_row = """
 			INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( %s, %s , %s)
 			"""
@@ -168,8 +166,7 @@ def search():
 	return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )
 
 if __name__ == '__main__':
-	# mysql_table_check()
 	app.run(port=5454 ,debug=True)
 
-# Delete Trigger
-# QR Code 
+# TODO's
+# Add delete button
