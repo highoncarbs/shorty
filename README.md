@@ -41,7 +41,7 @@ Configure the MySQL database credentials in ```config.py```
 Set the host , user , password and database name for MySQL connection.
 
 
-##Projects Used
+###Projects Used
 * ![Skeleton CSS Framework](https://getskeleton.com)
 * ![Clipboard.js](https://clipboardjs.com)
 ## License
