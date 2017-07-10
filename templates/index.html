@@ -46,9 +46,8 @@
 
 	<!-- Error Display block -->
 
-	{% if error != null %}
+	{% if error != '' %}
 				<p class="error_disp">
-					error
 					{{error}}
 				</p>
 				{% endif %}
@@ -73,7 +72,7 @@
 
 	<!-- URL List Block -->
 	
-	{% if not shorty_url%}
+	{% if not shorty_url %}
 	<!-- Add Empty list case -> 'Wow . Such Empty!' -->
 	<div class="table_list u-full-width">
 	<table>

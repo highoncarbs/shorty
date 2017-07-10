@@ -11,9 +11,6 @@ passwrd = "pass"
 db = "SHORTY"
 
 
-# !!IMP!!
-# Confirm for SQL Injection adn security ! 
-# USe of ' ? ' replaced with format()
 def list_data(shorty_url):
 	
 	"""
@@ -45,6 +42,3 @@ def list_data(shorty_url):
 	conn.close()
 	return info_fetch , counter_fetch , browser_fetch , platform_fetch
 
-# Test playground
-# c , b , p = list_data("tiktok")
-# print c

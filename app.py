@@ -1,16 +1,18 @@
 #!/usr/bin/env python2.7
 
+# * Duplicate s_url entry to be fixed.
+
 import sys
 import os
 
 # Flask Import
-from flask import Flask , request , redirect , render_template
+from flask import Flask , request , redirect , render_template , url_for
 import MySQLdb
-# token gen import
-from check_encode import random_token
-from check_encode import url_check
+# Toekn and URL check import
+from check_encode import random_token , url_check
 from display_list import list_data
-from sql_table import *
+
+from sql_table import mysql_table
 
 # Setting UTF-8 encoding
 
@@ -32,17 +34,6 @@ db = "SHORTY"
 
 
 # url.db -> root folder * Db check fuction*
-def sqlite_table_check():
-	create_table = create_table_per_user
-	conn =  sqlite3.connect('url.db')
-	cursor = conn.cursor()
-	try:
-		cursor.execute(create_table)
-		conn.commit()
-		conn.close()
-	except OperationalError:
-		error = str(OperationalError)
-	pass
 
 def mysql_table_check():
 	
@@ -55,8 +46,8 @@ def mysql_table_check():
 
 @app.route('/analytics/<short_url>')
 def analytics(short_url):
-	info_fetch , counter_fetch , browser_fetch , platform_fetch = list_data(short_url)
 
+	info_fetch , counter_fetch , browser_fetch , platform_fetch = list_data(short_url)
 	return render_template("data.html" , info = info_fetch ,counter = counter_fetch , browser = browser_fetch , platform = platform_fetch)
 
 
@@ -69,33 +60,43 @@ def index():
 	list_sql = "SELECT * FROM WEB_URL;"
 	cursor.execute(list_sql)
 	result_all_fetch = cursor.fetchall()
-	print result_all_fetch
+
 		
 	if request.method == 'POST':
 		og_url = request.form.get('url_input')
 		custom_suff = request.form.get('url_custom')
 		tag_url = request.form.get('url_tag')
 		
-		if custom_suff == '':
-			token_string =  random_token()
+		if og_url != '':
+			if url_check(og_url) == True:
+				if custom_suff == '':
+					token_string =  random_token()
+				else:
+					token_string = custom_suff
+
+				insert_row = """
+					INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( %s, %s , %s)
+					"""
+				result_cur = cursor.execute(insert_row ,(og_url , token_string , tag_url,))
+
+				list_sql = "SELECT * FROM WEB_URL;"
+				cursor.execute(list_sql)
+				result_all_fetch = cursor.fetchall()
+				print result_all_fetch
+				conn.commit()
+				conn.close()
+				e = ''
+				return render_template('index' ,shorty_url = shorty_host+token_string , error = e )
+			else:
+				e = "URL entered doesn't seem valid  , Enter a valid URL."
+				return render_template('index.html' ,table = result_all_fetch, error = e)
+
 		else:
-			token_string = custom_suff
-
-		insert_row = """
-			INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( %s, %s , %s)
-			"""
-		result_cur = cursor.execute(insert_row ,(og_url , token_string , tag_url,))
-
-		list_sql = "SELECT * FROM WEB_URL;"
-		cursor.execute(list_sql)
-		result_all_fetch = cursor.fetchall()
-		print result_all_fetch
-		conn.commit()
-		conn.close()
-			
-		return render_template('index.html' ,shorty_url = shorty_host+token_string )
+			e = "Enter a URL."
+			return render_template('index.html' , table = result_all_fetch,error = e)
 	else:	
-		return render_template('index.html',table = result_all_fetch )
+		e = ''
+		return render_template('index.html',table = result_all_fetch , error = e )
 	
 # Rerouting funciton	
 
@@ -128,8 +129,7 @@ def reroute(short_url):
 
 	try:
 		new_url = cursor.fetchone()[0]
-		print new_url
-
+	
 		# Update Counters 
 		
 		counter_sql = "\
@@ -148,16 +148,16 @@ def reroute(short_url):
 		return redirect(new_url)
 
 	except Exception as e:
-		print e
-		return render_template('index.html' , error = e)
+		e = "Something went wrong.Please try again."
+		return render_template('404.html') ,404
 
 # Search results
-
 @app.route('/search' ,  methods=['GET' , 'POST'])
 def search():
 	s_tag = request.form.get('search_url')
-
-	if s_tag #to fix when search term is none :
+	if s_tag == "":
+		return render_template('index.html' ,table = result_all_fetch , error = "Please enter a search term")
+	else:
 		conn = MySQLdb.connect(localhost , user , passwrd, db)
 		cursor = conn.cursor()
 		
@@ -166,11 +166,10 @@ def search():
 		search_tag_fetch = cursor.fetchall()
 		conn.close()
 		return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )
-	else:
-		return render_template('search.html' , error = "Please enter a search term" )
 
 if __name__ == '__main__':
-	app.run(port=5454 ,debug=True)
+	app.run(debug=True)
+
 
 # TODO's
 # Add delete button
