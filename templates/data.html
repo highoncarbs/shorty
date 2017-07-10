@@ -19,23 +19,26 @@
 </div>
 	<div class=" container modal-content">
 	<!-- Array index -> 
-		CHROME ,
-		FIREFOX,
-		SAFARI,
-		OTHER_BROWSER,
-		ANDROID,
-		IOS,
-		WINDOWS,
-		LINUX ,
-		MAC,
-		OTHER_PLATFORM
-	 -->
+		broswer : 
+			CHROME ,
+			FIREFOX,
+			SAFARI,
+			OTHER_BROWSER,
+		platform:
+			ANDROID,
+			IOS,
+			WINDOWS,
+			LINUX ,
+			MAC,
+			OTHER_PLATFORM
+		 -->
 	<div class="url_info">
-	<h4> Analytics data for : <a href="http://localhost:5454/{{url[2]}}">{{url[2]}}</a></h4>
-		<p>Original URL : <a href="{{url[1]}}">{{url[1]}}</a></p>
+	<h4> Analytics data for : <a href="http://localhost:5454/{{info[1]}}">{{'mbkwk.co/'+info[1]}}</a></h4>
+		<p>Original URL : <a style="text-decoration: none" href="{{info[0]}}">{{info[0]}}</a></p>
 	</div>	
+	<div class="data_block">
 	 <div class="browser_list">
-		<h4>Browsers</h4>
+		<h4>Browser</h4>
 		<table>
 			<thead>
 				<tr>
@@ -48,15 +51,16 @@
 
 			<tbody>
 				<tr>
-					<td>{{url[5]}}</td>
-					<td>{{url[6]}}</td>
-					<td>{{url[7]}}</td>
-					<td>{{url[8]}}</td>
+					<td>{{browser[0]}}</td>
+					<td>{{browser[1]}}</td>
+					<td>{{browser[2]}}</td>
+					<td>{{browser[3]}}</td>
 				</tr>	
 			</tbody>
 		</table> 	
 	 </div>
 	 <div class="platform_list">
+	 		<h4>Platform</h4>
 	 		<table>
 			<thead>
 				<tr>
@@ -70,16 +74,17 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>{{url[9]}}</td>
-					<td>{{url[10]}}</td>
-					<td>{{url[11]}}</td>
-					<td>{{url[12]}}</td>
-					<td>{{url[13]}}</td>
-					<td>{{url[14]}}</td>
+					<td>{{platform[0]}}</td>
+					<td>{{platform[1]}}</td>
+					<td>{{platform[2]}}</td>
+					<td>{{platform[3]}}</td>
+					<td>{{platform[4]}}</td>
+					<td>{{platform[5]}}</td>
 				</tr>	
 			</tbody>
 		</table> 	
 	 				
+ 	</div>
  	</div>	 
 	</div>
 </body>

@@ -95,14 +95,12 @@
 		</thead>
 
 		<tbody>
-		{% for url in table 
-
-		%}
+		{% for url in table %}
 			<tr>
 				<td style="padding-left: 5px;">{{url[1]}}</td>
 				<td><a href="{{ 'http://localhost:5454/'+url[2]}}">{{ 'http://localhost:5454/'+url[2]}}</a></td>
 				<td style="text-align: center;">{{url[4]}}</td>
-				<td id="info"><a href="{{url_for('data')}}"><i class="material-icons" >info_outline</i></a></td>
+				<td id="info"><a href=" {{url_for('analytics' ,short_url=url[2])}} "><i class="material-icons" >info_outline</i></a></td>
 			</tr>
 			
 		{% endfor %}		

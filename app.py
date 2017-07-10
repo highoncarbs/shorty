@@ -1,18 +1,15 @@
 #!/usr/bin/env python2.7
-# import sqlite3
+
 import sys
 import os
 
 # Flask Import
 from flask import Flask , request , redirect , render_template
-# from sqlite3 import OperationalError
 import MySQLdb
 # token gen import
 from check_encode import random_token
 from check_encode import url_check
-
-# WTFForm Imports
-
+from display_list import list_data
 from sql_table import *
 
 # Setting UTF-8 encoding
@@ -26,30 +23,12 @@ app = Flask(__name__)
 app.config.from_object('config')
 shorty_host = "http://localhost:5454/"
 
-'''
-# FLask wtf init
-from flask_wtf import Form
-from wtforms import StringField
-from wtforms.validators import DataRequired
-
-class Search_tag(Form):
-	search_input = StringField('search_url' , validators=[DataRequired()])
-
-'''
-
 # MySQL configurations
 
 localhost = "localhost"
 user = "root"
 passwrd = "pass"
 db = "SHORTY"
-
-# app.config['MYSQL_DATABASE_USER'] = 'root'
-# app.config['MYSQL_DATABASE_PASSWORD'] = 'pass'
-# app.config['MYSQL_DATABASE_DB'] = 'SHORTY'
-# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-# mysql.init_app(app)
-# mysql = MySQL()
 
 
 # url.db -> root folder * Db check fuction*
@@ -75,31 +54,14 @@ def mysql_table_check():
 
 
 @app.route('/analytics/<short_url>')
-def testing():
-	display_sql = list_data("short_url")
-	return render_template("table.html" , t_clicks = display_sql)
+def analytics(short_url):
+	info_fetch , counter_fetch , browser_fetch , platform_fetch = list_data(short_url)
 
-'''
-# Not in use
+	return render_template("data.html" , info = info_fetch ,counter = counter_fetch , browser = browser_fetch , platform = platform_fetch)
 
-@app.route('/login')
-def login_user():
-
-	return render_template('login_page.html')
-
-'''
 
 @app.route('/' , methods=['GET' , 'POST'])
 def index():
-
-	'''
-	search = Search_tag()
-	if search.validate_on_submit():
-		return render_template('/search/<search_input>')
-	else:
-		error = "Oops ! The search seems broken."
-		return render_template('index.html' ,form = search)
-	'''
 
 	conn = MySQLdb.connect(localhost , user , passwrd, db)
 	cursor = conn.cursor()
