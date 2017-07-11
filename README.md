@@ -15,7 +15,7 @@ cd shorty/
 python ./app.py
 ```
 
-### Prerequisites
+## Prerequisites
 
 This project requires Flask and MySQL . 
 And MySQLdb python module for connection.
@@ -41,8 +41,8 @@ Configure the MySQL database credentials in ```config.py```
 Set the host , user , password and database name for MySQL connection.
 
 
-###Projects Used
-* ![Skeleton CSS Framework](https://getskeleton.com)
-* ![Clipboard.js](https://clipboardjs.com)
+## Projects Used
+* [Skeleton CSS Framework](http://getskeleton.com)
+* [Clipboard.js](https://clipboardjs.com)
 ## License
 This project is licensed under the MIT Licene.
