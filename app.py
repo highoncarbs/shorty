@@ -1,6 +1,8 @@
 #!/usr/bin/env python2.7
 
-# * Duplicate s_url entry to be
+# * Refactor Code ( --!)
+# * rRemove defined host -> pass from app.py
+# * Duplicate s_url entry to be fixed( ++!)
 
 import sys
 import os
@@ -8,11 +10,15 @@ import os
 # Flask Import
 from flask import Flask , request , redirect , render_template , url_for
 import MySQLdb
+
 # Toekn and URL check import
 from check_encode import random_token , url_check
 from display_list import list_data
 
 from sql_table import mysql_table
+
+# Config import
+import config
 
 # Setting UTF-8 encoding
 
@@ -23,40 +29,32 @@ os.putenv('LC_ALL', 'en_US.UTF-8')
 
 app = Flask(__name__)
 app.config.from_object('config')
-shorty_host = "http://localhost:5000/"
+
+shorty_host = config.domain
 
 # MySQL configurations
 
-localhost = "localhost"
-user = "root"
-passwrd = "pass"
-db = "SHORTY"
-
-
-# url.db -> root folder * Db check fuction*
-
-def mysql_table_check():
-	
-	create_table = mysql_table
-	conn = MySQLdb.connect(localhost , user , passwrd, db)
-	cursor = conn.cursor()
-	cursor.execute(create_table)
-	conn.close()
+host = config.host
+user = config.user
+passwrd = config.passwrd
+db = config.db
 
 
 @app.route('/analytics/<short_url>')
 def analytics(short_url):
 
 	info_fetch , counter_fetch , browser_fetch , platform_fetch = list_data(short_url)
-	return render_template("data.html" , info = info_fetch ,counter = counter_fetch , browser = browser_fetch , platform = platform_fetch)
+	return render_template("data.html" , info = info_fetch ,counter = counter_fetch ,\
+	 browser = browser_fetch , platform = platform_fetch)
 
 
 @app.route('/' , methods=['GET' , 'POST'])
 def index():
 
-	conn = MySQLdb.connect(localhost , user , passwrd, db)
+	conn = MySQLdb.connect(host , user , passwrd, db)
 	cursor = conn.cursor()
 	
+	# Return the full table to displat on index.
 	list_sql = "SELECT * FROM WEB_URL;"
 	cursor.execute(list_sql)
 	result_all_fetch = cursor.fetchall()
@@ -91,21 +89,21 @@ def index():
 				return render_template('index.html' ,shorty_url = shorty_host+token_string , error = e )
 			else:
 				e = "URL entered doesn't seem valid  , Enter a valid URL."
-				return render_template('index.html' ,table = result_all_fetch, error = e)
+				return render_template('index.html' ,table = result_all_fetch, host = shorty_host,error = e)
 
 		else:
 			e = "Enter a URL."
-			return render_template('index.html' , table = result_all_fetch,error = e)
+			return render_template('index.html' , table = result_all_fetch, host = shorty_host,error = e)
 	else:	
 		e = ''
-		return render_template('index.html',table = result_all_fetch , error = e )
+		return render_template('index.html',table = result_all_fetch ,host = shorty_host, error = e )
 	
 # Rerouting funciton	
 
 @app.route('/<short_url>')
 def reroute(short_url):
 
-	conn = MySQLdb.connect(localhost , user , passwrd, db)
+	conn = MySQLdb.connect(host , user , passwrd, db)
 	cursor = conn.cursor()
 	platform = request.user_agent.platform
 	browser =  request.user_agent.browser
@@ -158,16 +156,16 @@ def reroute(short_url):
 def search():
 	s_tag = request.form.get('search_url')
 	if s_tag == "":
-		return render_template('index.html' ,table = result_all_fetch , error = "Please enter a search term")
+		return render_template('index.html', error = "Please enter a search term")
 	else:
-		conn = MySQLdb.connect(localhost , user , passwrd, db)
+		conn = MySQLdb.connect(host , user , passwrd, db)
 		cursor = conn.cursor()
 		
 		search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = %s" 
 		cursor.execute(search_tag_sql , (s_tag, ) )
 		search_tag_fetch = cursor.fetchall()
 		conn.close()
-		return render_template('search.html' , search_tag = s_tag , table = search_tag_fetch )
+		return render_template('search.html' , host = shorty_host , search_tag = s_tag , table = search_tag_fetch )
 
 if __name__ == '__main__':
 	app.run(debug=True)

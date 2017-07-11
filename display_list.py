@@ -1,14 +1,14 @@
 import sqlite3
-from config import *
+import config
 import MySQLdb
 
 
 # MySQL configurations
 
-localhost = "localhost"
-user = "root"
-passwrd = "pass"
-db = "SHORTY"
+host = config.host
+user = config.user	
+passwrd = config.passwrd
+db = config.db
 
 
 def list_data(shorty_url):
@@ -17,7 +17,7 @@ def list_data(shorty_url):
 		Takes short_url for input.
 		Returns counter , browser , platform ticks. 
 	"""
-	conn = MySQLdb.connect(localhost , user , passwrd, db)
+	conn = MySQLdb.connect(host , user , passwrd, db)
 	cursor = conn.cursor()
 	su =[shorty_url]
 	info_sql = "SELECT URL , S_URL FROM WEB_URL WHERE S_URL= %s; "

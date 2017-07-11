@@ -1,3 +1,8 @@
+'''
+	SQL Table Create Statement , 
+	Follow the same order as given.
+'''
+
 mysql_table = '''
 		CREATE TABLE WEB_URL(
 		ID INT AUTO_INCREMENT,
@@ -17,4 +22,3 @@ mysql_table = '''
 		OTHER_PLATFORM INT DEFAULT 0 , 
 		PRIMARY KEY(ID));
 		'''
-
