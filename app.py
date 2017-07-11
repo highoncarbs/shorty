@@ -44,7 +44,7 @@ db = config.db
 def analytics(short_url):
 
 	info_fetch , counter_fetch , browser_fetch , platform_fetch = list_data(short_url)
-	return render_template("data.html" , info = info_fetch ,counter = counter_fetch ,\
+	return render_template("data.html" , host = shorty_host,info = info_fetch ,counter = counter_fetch ,\
 	 browser = browser_fetch , platform = platform_fetch)
 
 
