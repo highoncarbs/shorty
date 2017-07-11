@@ -114,7 +114,7 @@ def reroute(short_url):
 	# Analytics
 	if browser in browser_dict:
 		browser_dict[browser] += 1
-	else:	
+	else:								
 		browser_dict['other'] += 1
 	
 	if platform in platform_dict.iterkeys():

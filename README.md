@@ -31,6 +31,8 @@ For mysql as backend
 sudo apt install mysql-server
 
 sudo apt-get install libmysqlclient-dev
+
+pip install MySQL-python
 ```
 Now run the following command to create the MySQL table 
 
