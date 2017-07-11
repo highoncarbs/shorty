@@ -2,7 +2,7 @@
 
 > A URL shortening service built using Flask & Mysql. 
 
-![Demo image of Shorty](./desc/hero_final.png)
+![Demo image of Shorty](./desc/hero_final.gif)
 ## Getting Started
 
 Clone or download this repository.
