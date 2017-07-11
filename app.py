@@ -1,9 +1,5 @@
 #!/usr/bin/env python2.7
 
-# * Refactor Code ( --!)
-# * rRemove defined host -> pass from app.py
-# * Duplicate s_url entry to be fixed( ++!)
-
 import sys
 import os
 
