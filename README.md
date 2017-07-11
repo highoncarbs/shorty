@@ -15,7 +15,7 @@ cd shorty/
 python ./app.py
 ```
 
-### Prerequisites
+## Prerequisites
 
 This project requires Flask and MySQL . 
 And MySQLdb python module for connection.
