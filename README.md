@@ -42,7 +42,7 @@ Set the host , user , password and database name for MySQL connection.
 
 
 ## Projects Used
-* ![Skeleton CSS Framework](https://getskeleton.com)
-* ![Clipboard.js](https://clipboardjs.com)
+* [Skeleton CSS Framework](https://getskeleton.com)
+* [Clipboard.js](https://clipboardjs.com)
 ## License
 This project is licensed under the MIT Licene.
