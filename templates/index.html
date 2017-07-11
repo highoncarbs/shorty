@@ -71,7 +71,7 @@
 	<!-- end block -->
 
 	<!-- URL List Block -->
-	
+	{% if not error %}
 	{% if not shorty_url %}
 	<!-- Add Empty list case -> 'Wow . Such Empty!' -->
 	<div class="table_list u-full-width">
@@ -98,6 +98,7 @@
 		</tbody>
 	</table>
 	</div>
+	{% endif %}
 	{% endif %}
 </div>
 </div>
