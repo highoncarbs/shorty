@@ -64,31 +64,32 @@ def index():
 		og_url = request.form.get('url_input')
 		custom_suff = request.form.get('url_custom')
 		tag_url = request.form.get('url_tag')
-		
+		if custom_suff == '':
+			token_string =  random_token()
+		else:
+			token_string = custom_suff
 		if og_url != '':
-			print url_check(og_url)
-
 			if url_check(og_url) == True:
-				if custom_suff == '':
-					token_string =  random_token()
+				
+				# Check's for existing suffix 
+				check_row = "SELECT S_URL FROM WEB_URL WHERE S_URL = %s"
+				cursor.execute(check_row,(token_string,))
+				check_fetch = cursor.fetchone()
+
+				if (check_fetch is None):
+					insert_row = """
+						INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( %s, %s , %s)
+						"""
+					result_cur = cursor.execute(insert_row ,(og_url , token_string , tag_url,))
+					conn.commit()
+					conn.close()
+					e = ''
+					return render_template('index.html' ,shorty_url = shorty_host+token_string , error = e )
 				else:
-					token_string = custom_suff
-
-				insert_row = """
-					INSERT INTO WEB_URL(URL , S_URL , TAG) VALUES( %s, %s , %s)
-					"""
-				result_cur = cursor.execute(insert_row ,(og_url , token_string , tag_url,))
-
-				list_sql = "SELECT * FROM WEB_URL;"
-				cursor.execute(list_sql)
-				result_all_fetch = cursor.fetchall()
-				print result_all_fetch
-				conn.commit()
-				conn.close()
-				e = ''
-				return render_template('index.html' ,shorty_url = shorty_host+token_string , error = e )
+					e = "The Custom suffix already exists . Please use another suffix or leave it blank for random suffix."
+					return render_template('index.html' ,table = result_all_fetch, host = shorty_host,error = e)
 			else:
-				e = "URL entered doesn't seem valid  , Enter a valid URL."
+				e = "URL entered doesn't seem valid , Enter a valid URL."
 				return render_template('index.html' ,table = result_all_fetch, host = shorty_host,error = e)
 
 		else:
@@ -129,7 +130,7 @@ def reroute(short_url):
 
 	try:
 		new_url = cursor.fetchone()[0]
-		print new_url
+		
 		# Update Counters 
 		
 		counter_sql = "\
@@ -140,7 +141,6 @@ def reroute(short_url):
 				og_safari = browser_dict['safari'] , og_oth_brow = browser_dict['other'] , og_andr = platform_dict['android'] , og_ios = platform_dict['iphone'] ,\
 				og_windows = platform_dict['windows'] , og_linux = platform_dict['linux'] , og_mac = platform_dict['macos'] , og_plat_other = platform_dict['other'] ,\
 				surl = short_url)
-		print counter_sql
 		res_update = cursor.execute(counter_sql)
 		conn.commit()
 		conn.close()

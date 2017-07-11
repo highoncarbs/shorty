@@ -20,8 +20,11 @@ user = config.user
 passwrd = config.passwrd
 db = config.db
 
+row = "SELECT S_URL FROM WEB_URL WHERE S_URL = 'tktk'"
 create_table = mysql_table
 conn = MySQLdb.connect(host , user , passwrd, db)
 cursor = conn.cursor()
-cursor.execute(create_table)
+cursor.execute(row)
+s = cursor.fetchone()
+print s
 conn.close()
