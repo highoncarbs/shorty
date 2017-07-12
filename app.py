@@ -68,7 +68,7 @@ def index():
 			if url_check(og_url) == True:
 				
 				# Check's for existing suffix 
-				check_row = "SELECT S_URL FROM WEB_URL WHERE S_URL = %s"
+				check_row = "SELECT S_URL FROM WEB_URL WHERE S_URL = %s FOR UPDATE"
 				cursor.execute(check_row,(token_string,))
 				check_fetch = cursor.fetchone()
 
@@ -126,7 +126,7 @@ def reroute(short_url):
 
 	try:
 		new_url = cursor.fetchone()[0]
-		
+		print new_url
 		# Update Counters 
 		
 		counter_sql = "\
