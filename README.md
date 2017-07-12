@@ -42,6 +42,11 @@ python ./create_table.py
 Configure the MySQL database credentials in ```config.py```
 Set the host , user , password and database name for MySQL connection.
 
+Also under MySQL shell set 
+```
+set autocommit = 0
+```
+This takes care of the concurrency issue.
 
 ## Projects Used
 * [Skeleton CSS Framework](http://getskeleton.com)
