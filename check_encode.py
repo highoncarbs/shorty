@@ -20,8 +20,12 @@ def url_check(url):
 	Retruns True , if URL is valid else False.
 	For detailed docs look into urlparse.
 	"""
+	min_attr = ('scheme' , 'netloc')
 	try:
 		result = urlparse(url)
-		return True if [result.scheme, result.netloc, result.path] else False
+		if all([result.scheme, result.netloc]):
+			return True
+		else:
+			return False
 	except:
 		return False

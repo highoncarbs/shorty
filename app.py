@@ -16,6 +16,12 @@ from sql_table import mysql_table
 # Config import
 import config
 
+# Import Loggers
+import logging
+from logging.handlers import RotatingFileHandler
+from time import strftime
+import traceback
+
 # Setting UTF-8 encoding
 
 reload(sys)
@@ -163,9 +169,29 @@ def search():
 		conn.close()
 		return render_template('search.html' , host = shorty_host , search_tag = s_tag , table = search_tag_fetch )
 
+@app.after_request
+def after_request(response):
+	timestamp = strftime('[%Y-%b-%d %H:%M]')
+	logger.error('%s %s %s %s %s %s',timestamp , request.remote_addr , \
+				request.method , request.scheme , request.full_path , response.status)
+	return response
+
+
+@app.errorhandler(Exception)
+def exceptions(e):
+	tb = traceback.format_exc()
+	timestamp = strftime('[%Y-%b-%d %H:%M]')
+	logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
+        timestamp, request.remote_addr, request.method,
+        request.scheme, request.full_path, tb)
+	return e.status_code
+
 if __name__ == '__main__':
-	app.run(debug=True)
 
+	# Logging handler
+	handler = RotatingFileHandler('app.log' , maxBytes=100000 , backupCount = 3)
+	logger = logging.getLogger('tdm')
+	logger.setLevel(logging.ERROR)
+	logger.addHandler(handler)
+	app.run()
 
-# TODO's
-# Add delete button
