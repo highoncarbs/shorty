@@ -1,0 +1,6 @@
+[2017-Jul-12 12:41] 127.0.0.1 GET http /? 200 OK
+[2017-Jul-12 12:41] 127.0.0.1 GET http /static/css/skeleton.css? 200 OK
+[2017-Jul-12 12:41] 127.0.0.1 GET http /static/css/normalize.css? 200 OK
+[2017-Jul-12 12:41] 127.0.0.1 GET http /static/css/main.css? 200 OK
+[2017-Jul-12 12:43] 127.0.0.1 GET http /? 200 OK
+[2017-Jul-12 12:43] 127.0.0.1 GET http /sqlin? 302 FOUND
