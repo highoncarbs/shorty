@@ -77,7 +77,7 @@ This takes care of the concurrency issue.
 ```
 
 
-`GET /api/v1/expand/` with query `custom=blah`
+`GET /api/v1/expand/` with form data `custom=blah`
 
 
 ```json
