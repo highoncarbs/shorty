@@ -34,18 +34,22 @@ sudo apt-get install libmysqlclient-dev
 
 pip install MySQL-python
 ```
+
 Now run the following command to create the MySQL table 
 
 ```
-python ./create_table.py
+python ./create_table.py`
 ```
-Configure the MySQL database credentials in ```config.py```
+
+Configure the MySQL database credentials in `config.py`
 Set the host , user , password and database name for MySQL connection.
 
 Also under MySQL shell set 
+
 ```
 set autocommit = 0
 ```
+
 This takes care of the concurrency issue.
 
 ## RESTful API
@@ -53,8 +57,8 @@ This takes care of the concurrency issue.
 
 `POST /api/v1/shorten` with form data `url=https://github.com/PadamSethia` , `custom=blah` & `tag=test` custom and tag are optional.
 
-
-```json{
+```json
+{
     "custom": "blah",
     "long_url": "https://github.com/PadamSethia",
     "short_url": "http://localhost:5454/blah",
@@ -65,7 +69,8 @@ This takes care of the concurrency issue.
 `GET /api/v1/expand/` with query `custom=blah`
 
 
-```json{
+```json
+{
     "click_browser": {
         "CHROME": 0,
         "FIREFOX": 0,
@@ -87,8 +92,8 @@ This takes care of the concurrency issue.
 }```
 
 
-for now the web app and api run on different ports.
-app : 5000 , api : 5454 
+>for now the web app and api run on different ports.
+>app : 5000 , api : 5454 
 
 ## Projects Used
 * [Skeleton CSS Framework](http://getskeleton.com)
