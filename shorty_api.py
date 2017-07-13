@@ -42,9 +42,7 @@ def create_short_url():
 						tag_url = request.args['tag']
 					else:
 						tag_url = ''
-
-				print og_url,tag_url , token_string
-
+						
 				conn = MySQLdb.connect(host , user , passwrd , db)
 				cursor = conn.cursor()
 				check_row = "SELECT S_URL FROM WEB_URL WHERE S_URL = %s FOR UPDATE"
