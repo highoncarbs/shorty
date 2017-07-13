@@ -48,6 +48,45 @@ set autocommit = 0
 ```
 This takes care of the concurrency issue.
 
+## RESTful API
+
+
+`POST /api/v1/shorten` with form data `url=https://github.com/PadamSethia` , `custom=blah` & `tag=test` custom and tag are optional.
+
+`{
+    "custom": "blah",
+    "long_url": "https://github.com/PadamSethia",
+    "short_url": "http://localhost:5454/blah",
+    "tag": "test" 
+}`
+
+`GET /api/v1/expand/` with query `custom=blah`
+
+`{
+    "click_browser": {
+        "CHROME": 0,
+        "FIREFOX": 0,
+        "OTHER_BROWSER": 0,
+        "SAFARI": 0
+    },
+    "click_platform": {
+        "ANDROID": 0,
+        "IOS": 0,
+        "LINUX": 0,
+        "MAC": 0,
+        "OTHER_PLATFORM": 0,
+        "WINDOWS": 0
+    },
+    "clicks": 0,
+    "custom": "blah",
+    "long_url": "http://github.com/PadamSethia",
+    "tag" : "test"
+}`
+
+
+> for now the web app and api run on different ports.
+> app : 5000 , api : 5454 
+
 ## Projects Used
 * [Skeleton CSS Framework](http://getskeleton.com)
 * [Clipboard.js](https://clipboardjs.com)

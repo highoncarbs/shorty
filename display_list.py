@@ -20,7 +20,7 @@ def list_data(shorty_url):
 	conn = MySQLdb.connect(host , user , passwrd, db)
 	cursor = conn.cursor()
 	su =[shorty_url]
-	info_sql = "SELECT URL , S_URL FROM WEB_URL WHERE S_URL= %s; "
+	info_sql = "SELECT URL , S_URL ,TAG FROM WEB_URL WHERE S_URL= %s; "
 	counter_sql = "SELECT COUNTER FROM WEB_URL WHERE S_URL= %s; "
 	browser_sql = "SELECT CHROME , FIREFOX , SAFARI, OTHER_BROWSER FROM WEB_URL WHERE S_URL =%s;"
 	platform_sql = "SELECT ANDROID , IOS , WINDOWS, LINUX , MAC , OTHER_PLATFORM FROM WEB_URL WHERE S_URL = %s;"	

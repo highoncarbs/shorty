@@ -42,7 +42,7 @@ def create_short_url():
 						tag_url = request.args['tag']
 					else:
 						tag_url = ''
-						
+
 				conn = MySQLdb.connect(host , user , passwrd , db)
 				cursor = conn.cursor()
 				check_row = "SELECT S_URL FROM WEB_URL WHERE S_URL = %s FOR UPDATE"
@@ -64,6 +64,7 @@ def create_short_url():
 						'long_url' : og_url,
 						'short_url' : short_url,
 						'custom' : token_string,
+						'tag' : tag_url
 					})
 				
 					return make_response(data , 200)
@@ -107,20 +108,21 @@ def retrieve_short_url():
 						'clicks' : counter[0],
 						'custom' : info[1],
 						'long_url' : info[0],
-						'browser_click' : {
+						'click_browser' : {
 							'CHROME' : browser[0] ,
 							'FIREFOX' : browser[1],
 							'SAFARI' : browser[2],
 							'OTHER_BROWSER': browser[3]
 							},
-						'platform_click' : {
+						'click_platform' : {
 							'ANDROID' : platform[0],
 							'IOS' : platform[1],
 							'WINDOWS' : platform[2],
 							'LINUX' : platform[3],
 							'MAC' : platform[4],
 							'OTHER_PLATFORM' :platform[5]
-							}
+							},
+						'tag' : info[2] 
 					})
 				return make_response(data,200)
 		else:
