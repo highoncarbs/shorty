@@ -4,7 +4,8 @@ import sys
 import os
 
 # Flask Import
-from flask import Flask , request , redirect , render_template , url_for
+from flask import Flask , request , redirect , render_template , url_for 
+from flask import jsonify , abort , make_response 
 import MySQLdb
 
 # Toekn and URL check import
@@ -40,7 +41,6 @@ host = config.host
 user = config.user
 passwrd = config.passwrd
 db = config.db
-
 
 @app.route('/analytics/<short_url>')
 def analytics(short_url):
@@ -169,6 +169,7 @@ def search():
 		conn.close()
 		return render_template('search.html' , host = shorty_host , search_tag = s_tag , table = search_tag_fetch )
 
+
 @app.after_request
 def after_request(response):
 	timestamp = strftime('[%Y-%b-%d %H:%M]')
@@ -184,7 +185,7 @@ def exceptions(e):
 	logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
         timestamp, request.remote_addr, request.method,
         request.scheme, request.full_path, tb)
-	return e.status_code
+	return make_response(e , 405)
 
 if __name__ == '__main__':
 
@@ -193,5 +194,5 @@ if __name__ == '__main__':
 	logger = logging.getLogger('tdm')
 	logger.setLevel(logging.ERROR)
 	logger.addHandler(handler)
-	app.run()
+	app.run(port= 5000 , host='127.0.0.1')
 
