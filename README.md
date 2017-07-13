@@ -4,9 +4,11 @@
 
 ![Demo image of Shorty](./desc/hero_final.gif)
 
+
 ## :tada: Surprise : Click Analytics 
 
-Currently tracking for Operating system and platform used ot access the link is available.
+Tracking for Operating system and platform used to access the link is available.
+
 
 ![Demo image for analytics](./desc/ana_demo.gif)
 
