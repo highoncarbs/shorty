@@ -1,10 +1,10 @@
-# Shorty
+#  :link: Shorty
 
 > A URL shortening service built using Flask & Mysql. 
 
 ![Demo image of Shorty](./desc/hero_final.gif)
 
-## Surprise : Click Analytics 
+## :tada: Surprise : Click Analytics 
 
 Currently tracking for Operating system and platform used ot access the link is available.
 
