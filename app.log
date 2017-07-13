@@ -468,3 +468,6 @@ NameError: global name 'cursor' is not defined
 [2017-Jul-13 12:21] 127.0.0.1 GET http /? 200 OK
 [2017-Jul-13 12:21] 127.0.0.1 GET http /project? 302 FOUND
 [2017-Jul-13 12:21] 127.0.0.1 GET http /project? 302 FOUND
+[2017-Jul-13 15:19] 127.0.0.1 GET http /? 200 OK
+[2017-Jul-13 15:20] 127.0.0.1 GET http /analytics/bb? 200 OK
+[2017-Jul-13 15:22] 127.0.0.1 GET http /analytics/bb? 200 OK
