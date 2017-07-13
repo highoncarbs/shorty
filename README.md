@@ -61,6 +61,7 @@ This takes care of the concurrency issue.
     "tag": "test" 
 }```
 
+
 `GET /api/v1/expand/` with query `custom=blah`
 
 
@@ -86,11 +87,12 @@ This takes care of the concurrency issue.
 }```
 
 
-> for now the web app and api run on different ports.
-> app : 5000 , api : 5454 
+for now the web app and api run on different ports.
+app : 5000 , api : 5454 
 
 ## Projects Used
 * [Skeleton CSS Framework](http://getskeleton.com)
 * [Clipboard.js](https://clipboardjs.com)
+
 ## License
 This project is licensed under the MIT Licene.
