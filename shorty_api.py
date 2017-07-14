@@ -160,4 +160,4 @@ def invaid_response_five(error):
 
 if __name__ == '__main__':
 
-	shorty_api.run(port= 5454 , host='127.0.0.1')
+	shorty_api.run(host='127.0.0.1', port=8000 )

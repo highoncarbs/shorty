@@ -190,9 +190,9 @@ def exceptions(e):
 if __name__ == '__main__':
 
 	# Logging handler
-	handler = RotatingFileHandler('app.log' , maxBytes=100000 , backupCount = 3)
+	handler = RotatingFileHandler('shorty.log' , maxBytes=100000 , backupCount = 3)
 	logger = logging.getLogger('tdm')
 	logger.setLevel(logging.ERROR)
 	logger.addHandler(handler)
-	app.run(port= 5000 , host='127.0.0.1')
+	app.run(host='127.0.0.1' , port=5000)
 
