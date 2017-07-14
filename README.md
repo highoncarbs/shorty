@@ -7,7 +7,7 @@
 
 ## :tada: Surprise : Click Analytics 
 
-Tracking for Operating system and platform used to access the link is available.
+Tracking for Browser and Platform used to access the link is available.
 
 
 ![Demo image for analytics](./desc/ana_demo.gif)
