@@ -109,18 +109,18 @@ def retrieve_short_url():
 						'custom' : info[1],
 						'long_url' : info[0],
 						'click_browser' : {
-							'CHROME' : browser[0] ,
-							'FIREFOX' : browser[1],
-							'SAFARI' : browser[2],
-							'OTHER_BROWSER': browser[3]
+							'chrome' : browser[0] ,
+							'firefox' : browser[1],
+							'safari' : browser[2],
+							'other_browser': browser[3]
 							},
 						'click_platform' : {
-							'ANDROID' : platform[0],
-							'IOS' : platform[1],
-							'WINDOWS' : platform[2],
-							'LINUX' : platform[3],
-							'MAC' : platform[4],
-							'OTHER_PLATFORM' :platform[5]
+							'android' : platform[0],
+							'ios' : platform[1],
+							'windows' : platform[2],
+							'linux' : platform[3],
+							'mac' : platform[4],
+							'other_platform' :platform[5]
 							},
 						'tag' : info[2] 
 					})

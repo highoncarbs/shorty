@@ -1,0 +1,8 @@
+[2017-Jul-14 12:46] 127.0.0.1 GET http /? 200 OK
+[2017-Jul-14 12:46] 127.0.0.1 GET http /static/css/skeleton.css? 304 NOT MODIFIED
+[2017-Jul-14 12:46] 127.0.0.1 GET http /static/css/normalize.css? 304 NOT MODIFIED
+[2017-Jul-14 12:46] 127.0.0.1 GET http /static/css/main.css? 304 NOT MODIFIED
+[2017-Jul-14 12:46] 127.0.0.1 GET http /favicon.ico? 404 NOT FOUND
+[2017-Jul-14 12:46] 127.0.0.1 GET http /favicon.ico? 404 NOT FOUND
+[2017-Jul-14 12:46] 127.0.0.1 GET http /analytics/bb? 200 OK
+[2017-Jul-14 12:49] 127.0.0.1 GET http /? 200 OK
