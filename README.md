@@ -1,12 +1,14 @@
-# Shorty
+#  :link: Shorty
 
 > A URL shortening service built using Flask & Mysql. 
 
 ![Demo image of Shorty](./desc/hero_final.gif)
 
-## Surprise : Click Analytics 
 
-Currently tracking for Operating system and platform used ot access the link is available.
+## :tada: Surprise : Click Analytics 
+
+Tracking for Browser and Platform used to access the link is available.
+
 
 ![Demo image for analytics](./desc/ana_demo.gif)
 
@@ -75,7 +77,7 @@ This takes care of the concurrency issue.
 ```
 
 
-`GET /api/v1/expand/` with query `custom=blah`
+`GET /api/v1/expand/` with form data `custom=blah`
 
 
 ```json
