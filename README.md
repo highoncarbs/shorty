@@ -114,7 +114,7 @@ In this case I'll consider AWS EC2 instance.
 
 * Set up the EC2 instance.
 
-... [Learn more](http://bathompso.com/blog/Flask-AWS-Setup/)
+...[Learn more](http://bathompso.com/blog/Flask-AWS-Setup/)
 
 * Clone this git repository.
 
