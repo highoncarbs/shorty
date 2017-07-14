@@ -7,7 +7,7 @@
 
 ## :tada: Surprise : Click Analytics 
 
-Tracking for Browser and Platform used to access the link is available.
+Tracking for Operating system and platform used to access the link is available.
 
 
 ![Demo image for analytics](./desc/ana_demo.gif)
@@ -105,7 +105,69 @@ This takes care of the concurrency issue.
 
 
 >for now the web app and api run on different ports.
->app : 5000 , api : 5454 
+>app : 5000 , api : 8000
+
+## Running for production
+
+This section outlines how to setup and run shorty on web servers.
+In this case I'll consider AWS EC2 instance.
+
+* Set up the EC2 instance.
+
+... [Learn more](http://bathompso.com/blog/Flask-AWS-Setup/)
+
+* Clone this git repository.
+
+Change the Host in `app.run()` to `0.0.0.0` , for both `shorty_api.py` and `app.py`
+
+Now if you run `python ./app.py` , shorty should run under the server IP as `<server host>:<port>`
+By default the `port` is `5000` , make sure to open the port before running the app.
+
+### Creating Script for running the app
+
+The inbuilt flask server is not built for production , it might do down after a couple of days .
+So we need to use production ready web servers , for this we'll use uWSGI and Nginx.
+
+First install uwsgi and nginx on EC2 instance
+
+`pip install uwsgi`
+
+If it doesn't work install from distro repo
+
+**For Ubuntu**
+`sudo apt-get install uwsgi-core uwsgi-plugin-python & nginx`
+
+
+**For CentOS / Amazon Linux**
+`sudo yum install uwsgi & nginx`
+
+
+#### Using uWSGI to run app.py and shorty_api.py
+
+The uwsgi file is already setup in this repo , just change the <user> to your user name .
+For eg , 
+
+
+`wsgi-file = /home/<user>/shorty/app.py`
+
+Just change the `<user>` to your sepecified user name , for me it would be
+
+`wsgi-file = /home/padam/shorty/app.py`
+
+So update the `uwsgi_app` and `uwsgi_api` files.
+
+Now to run the script , run 
+
+`uwsgi --ini uwsgi_app &`
+
+The `&` is used to run app.py in background.
+
+For the API run
+
+`uwsgi --ini uwsgi_api &`
+
+Both the processes will run in background .
+
 
 ## Projects Used
 * [Skeleton CSS Framework](http://getskeleton.com)
