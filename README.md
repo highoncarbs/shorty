@@ -1,6 +1,6 @@
 #  :link: Shorty
 
-> A URL shortening service built using Flask & Mysql. 
+> A self-hosted URL shortening service built using Flask & Mysql. 
 
 ![Demo image of Shorty](./desc/hero_final.gif)
 
