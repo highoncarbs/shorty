@@ -33,6 +33,12 @@ os.putenv('LC_ALL', 'en_US.UTF-8')
 app = Flask(__name__)
 app.config.from_object('config')
 
+# Logging handler
+handler = RotatingFileHandler('/tmp/shorty.log', maxBytes=100000, backupCount=3)
+logger = logging.getLogger('tdm')
+logger.setLevel(logging.ERROR)
+logger.addHandler(handler)
+
 shorty_host = config.domain
 
 # MySQL configurations
@@ -188,11 +194,5 @@ def exceptions(e):
 	return make_response(e , 405)
 
 if __name__ == '__main__':
-
-	# Logging handler
-	handler = RotatingFileHandler('shorty.log' , maxBytes=100000 , backupCount = 3)
-	logger = logging.getLogger('tdm')
-	logger.setLevel(logging.ERROR)
-	logger.addHandler(handler)
 	app.run(host='127.0.0.1' , port=5000)
 

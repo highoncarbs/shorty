@@ -1,0 +1,27 @@
+web:
+  env_file:
+    - .env
+  build: .
+  command: gunicorn app:app -b 0.0.0.0:$WEB_PORT -w 3
+  ports:
+    - $WEB_PORT:$WEB_PORT
+  volumes:
+     - .:/app
+  links:
+    - db
+api:
+  env_file:
+    - .env
+  build: .
+  command: gunicorn shorty_api:shorty_api -b 0.0.0.0:$API_PORT -w 3
+  ports:
+    - $API_PORT:$API_PORT
+  volumes:
+     - .:/app
+  links:
+    - db
+db:
+ image: mysql:5.7
+ environment:
+    - MYSQL_ROOT_PASSWORD
+    - MYSQL_DATABASE
