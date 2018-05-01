@@ -2,6 +2,12 @@
 
 > A self-hosted URL shortening service built using Flask & Mysql. 
 
+## Docker Compose Installation
+1. Copy the `example.env` file to `.env`
+2. Run `docker-compose up`
+3. Wait for the mysql database to initialize, then run on other terminal: `docker-compose exec web python ./create_table.py`
+4. Open browser on `http://localhost:5000/`
+
 ![Demo image of Shorty](./desc/hero_final.gif)
 
 
