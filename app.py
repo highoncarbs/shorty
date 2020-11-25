@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!python3
 
 import sys
 import os
@@ -8,27 +8,19 @@ from flask import Flask , request , redirect , render_template , url_for
 from flask import jsonify , abort , make_response 
 import MySQLdb
 
-# Toekn and URL check import
+# Token and URL check import
 from check_encode import random_token , url_check
 from display_list import list_data
 
-from sql_table import mysql_table
+from sql_table import ensureTableExists
 
 # Config import
 import config
 
 # Import Loggers
 import logging
-from logging.handlers import RotatingFileHandler
 from time import strftime
 import traceback
-
-# Setting UTF-8 encoding
-
-reload(sys)
-sys.setdefaultencoding('UTF-8')
-os.putenv('LANG', 'en_US.UTF-8')
-os.putenv('LC_ALL', 'en_US.UTF-8')
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -41,6 +33,8 @@ host = config.host
 user = config.user
 passwrd = config.passwrd
 db = config.db
+
+ensureTableExists(host, user, passwrd, db)
 
 @app.route('/analytics/<short_url>')
 def analytics(short_url):
@@ -123,7 +117,7 @@ def reroute(short_url):
 	else:								
 		browser_dict['other'] += 1
 	
-	if platform in platform_dict.iterkeys():
+	if platform in iter(platform_dict.keys()):
 		platform_dict[platform] += 1
 	else:
 		platform_dict['other'] += 1
@@ -132,7 +126,7 @@ def reroute(short_url):
 
 	try:
 		new_url = cursor.fetchone()[0]
-		print new_url
+		print(new_url)
 		# Update Counters 
 		
 		counter_sql = "\
@@ -172,7 +166,7 @@ def search():
 @app.after_request
 def after_request(response):
 	timestamp = strftime('[%Y-%b-%d %H:%M]')
-	logger.error('%s %s %s %s %s %s',timestamp , request.remote_addr , \
+	logging.error('%s %s %s %s %s %s',timestamp , request.remote_addr , \
 				request.method , request.scheme , request.full_path , response.status)
 	return response
 
@@ -181,17 +175,11 @@ def after_request(response):
 def exceptions(e):
 	tb = traceback.format_exc()
 	timestamp = strftime('[%Y-%b-%d %H:%M]')
-	logger.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
+	logging.error('%s %s %s %s %s 5xx INTERNAL SERVER ERROR\n%s',
         timestamp, request.remote_addr, request.method,
         request.scheme, request.full_path, tb)
 	return make_response(e , 405)
 
 if __name__ == '__main__':
-
-	# Logging handler
-	handler = RotatingFileHandler('shorty.log' , maxBytes=100000 , backupCount = 3)
-	logger = logging.getLogger('tdm')
-	logger.setLevel(logging.ERROR)
-	logger.addHandler(handler)
 	app.run(host='127.0.0.1' , port=5000)
 

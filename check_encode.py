@@ -1,4 +1,4 @@
-from urlparse import urlparse
+from urllib.parse import urlparse
 import random
 import string
 
@@ -9,7 +9,7 @@ def random_token(size = 6):
 	Returns a valid token of desired size , 
 	*default is 6 chars
 	"""
-	BASE_LIST = string.digits + string.letters
+	BASE_LIST = string.digits + string.ascii_letters
 	
 	token = ''.join((random.choice(BASE_LIST)) for char in range(size))
 	return token
