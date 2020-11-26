@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container  main_header">
-	<h3 align="left"><a href="{{url_for('index')}}">Shorty</a></h3>
+	<h3 align="left"><a href="{{url_for('index', token=token)}}">Shorty</a></h3>
 	<p>A dead simple URL shortener service.</p>
 </div>
 
@@ -24,7 +24,7 @@
 
 	<div class="search_url_block">
 
-		<form method="post" action="/search" name="search_tag_block">
+		<form method="post" action="{{url_for('search', token=token)}}" name="search_tag_block">
 			<input type="text" name="search_url" placeholder="Search tags ">
 			<button type="submit" class="button-primary search_url_btn" value="Search">Search</button>
 		
@@ -92,7 +92,7 @@
 				<td style="padding-left: 5px;">{{url[1]}}</td>
 				<td><a href="{{host+url[2]}}">{{ host+url[2]}}</a></td>
 				<td style="text-align: center;">{{url[4]}}</td>
-				<td id="info"><a href=" {{url_for('analytics' ,short_url=url[2])}} "><i class="material-icons" >info_outline</i></a></td>
+				<td id="info"><a href=" {{url_for('analytics', token=token, short_url=url[2])}} "><i class="material-icons" >info_outline</i></a></td>
 			</tr>
 			
 		{% endfor %}		

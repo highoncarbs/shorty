@@ -1,5 +1,3 @@
-import os
-
 # WTF config
 
 WTF_CSRF_ENABLED = True
