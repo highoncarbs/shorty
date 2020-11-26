@@ -51,6 +51,41 @@ def analytics(short_url):
         token=token)
 
 
+@app.route('/delete/<short_url>')
+def delete(short_url):
+    access_control(request)
+
+    conn = MySQLdb.connect(host, user, passwrd, db)
+    cursor = conn.cursor()
+
+    delete_sql = """
+        DELETE FROM WEB_URL WHERE S_URL = %s
+    """
+    cursor.execute(delete_sql, (short_url,))
+    conn.commit()
+    conn.close()
+    return render_template('index.html', token=token, error="Deleted")
+
+
+# Search results
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    access_control(request)
+
+    s_tag = request.form.get('search_url')
+    if s_tag == "":
+        return render_template('index.html', token=token, error="Please enter a search term")
+    else:
+        conn = MySQLdb.connect(host, user, passwrd, db)
+        cursor = conn.cursor()
+
+        search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = %s"
+        cursor.execute(search_tag_sql, (s_tag, ))
+        search_tag_fetch = cursor.fetchall()
+        conn.close()
+        return render_template('search.html', host=shorty_host, search_tag=s_tag, table=search_tag_fetch, token=token)
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     access_control(request)
@@ -107,6 +142,7 @@ def index():
 # Rerouting funciton
 @app.route('/<short_url>')
 def reroute(short_url):
+    print("REROUTE {}".format(shorty_host))
 
     conn = MySQLdb.connect(host, user, passwrd, db)
     cursor = conn.cursor()
@@ -166,25 +202,6 @@ def reroute(short_url):
     except Exception:
         traceback.print_exc()
         return render_template('404.html'), 404
-
-
-# Search results
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    access_control(request)
-
-    s_tag = request.form.get('search_url')
-    if s_tag == "":
-        return render_template('index.html', token=token, error="Please enter a search term")
-    else:
-        conn = MySQLdb.connect(host, user, passwrd, db)
-        cursor = conn.cursor()
-
-        search_tag_sql = "SELECT * FROM WEB_URL WHERE TAG = %s"
-        cursor.execute(search_tag_sql, (s_tag, ))
-        search_tag_fetch = cursor.fetchall()
-        conn.close()
-        return render_template('search.html', host=shorty_host, search_tag=s_tag, table=search_tag_fetch, token=token)
 
 
 @app.after_request
