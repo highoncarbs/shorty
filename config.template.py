@@ -18,3 +18,7 @@ For now , use http as using https returns a bad error message,
 For https , use a SSL certificate. ( under works)
 '''
 domain = "http://localhost:5000/"
+
+# Simple Access Control
+token = None  # Disabled
+token = "my_admin_token"    # use ?token=my_admin_token to access
