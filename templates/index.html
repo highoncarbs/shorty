@@ -81,6 +81,7 @@
 			<tr>
 				<th>Original URL</th>
 				<th>Short URL</th>
+				<th>Tag</th>
 				<th>Clicks</th>
 				<th>Info</th>
 				<th>Action</th>
@@ -92,6 +93,7 @@
 			<tr>
 				<td style="padding-left: 5px;">{{url[1]}}</td>
 				<td><a href="{{host+url[2]}}">{{ host+url[2]}}</a></td>
+				<td style="text-align: center;">{{url[3]}}</td>
 				<td style="text-align: center;">{{url[4]}}</td>
 				<td id="info"><a href=" {{url_for('analytics', token=token, short_url=url[2])}} "><i class="material-icons" >info_outline</i></a></td>
 				<td id="delete"><a href=" {{url_for('delete', token=token, short_url=url[2])}} ">Delete</a></td>
